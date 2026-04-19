@@ -13,9 +13,11 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Roles } from "@/constants/role";
+import { userService } from "@/service/user.service";
 import React from "react";
 
-export default function Page({
+export default async function Page({
     admin,
     tutor,
     user,
@@ -24,12 +26,20 @@ export default function Page({
     tutor: React.ReactNode;
     user: React.ReactNode;
 }) {
-    const userInfo = {
-        role: "admin",
+    const { data } = await userService.getSession();
+    const role = data.user.role;
+    console.log("user role from dashboard layout : ", role);
+
+    const roleView = {
+        [Roles.admin]: admin,
+        [Roles.tutor]: tutor,
+        [Roles.user]: user,
     };
+    const currentView = roleView[role] ?? <div>Unauthorized</div>;
+
     return (
         <SidebarProvider>
-            <AppSidebar user={userInfo} />
+            <AppSidebar user={data?.user} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 border-b">
                     <div className="flex items-center gap-2 px-3">
@@ -56,11 +66,7 @@ export default function Page({
                     </div>
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
-                    {userInfo.role === "admin"
-                        ? admin
-                        : userInfo.role === "tutor"
-                          ? tutor
-                          : user}
+                    {currentView}
                 </div>
             </SidebarInset>
         </SidebarProvider>

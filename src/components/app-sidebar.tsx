@@ -19,6 +19,7 @@ import { adminRoutes } from "@/routes/adminRoutes";
 import { tutorRoutes } from "@/routes/tutorRoutes";
 import { userRoutes } from "@/routes/userRoutes";
 import { Route } from "@/types/routesType";
+import { Roles } from "@/constants/role";
 
 export function AppSidebar({
     user,
@@ -26,21 +27,26 @@ export function AppSidebar({
 }: {
     user: { role: string } & React.ComponentProps<typeof Sidebar>;
 }) {
+    console.log("user role from app sidebar layout : ", user.role);
+
     let routes: Route[] = [];
+    console.log("start:", routes);
     switch (user.role) {
-        case "admin":
+        case Roles.admin:
             routes = adminRoutes;
             break;
-        case "tutor":
+        case Roles.tutor:
             routes = tutorRoutes;
             break;
-        case "user":
+        case Roles.user:
             routes = userRoutes;
             break;
         default:
             routes = [];
             break;
     }
+    console.log("end :", routes);
+
     return (
         <Sidebar {...props}>
             <SidebarHeader>

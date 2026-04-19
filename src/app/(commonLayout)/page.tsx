@@ -2,7 +2,6 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { cookies } from "next/headers";
 
 export default async function Home() {
     // we can't get session bcz for getting session we have to send cookie to server
@@ -12,15 +11,6 @@ export default async function Home() {
     //* const session = await authClient.getSession();
     // const session = authClient.useSession(); //* is's a reactive way to get session but in client component
     // console.log(session);
-    const cookieStore = await cookies();
-    console.log(cookieStore.toString());
-
-    const res = await fetch("http://localhost:5000/api/auth/get-session", {
-        headers: {
-            Cookie: cookieStore.toString(),
-        },
-    });
-    console.log(await res.json());
 
     return (
         <div className="min-h-screen bg-background">
