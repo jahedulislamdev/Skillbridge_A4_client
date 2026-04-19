@@ -15,10 +15,21 @@ import {
 } from "@/components/ui/sidebar";
 import React from "react";
 
-export default function Page({ children }: { children: React.ReactNode }) {
+export default function Page({
+    admin,
+    tutor,
+    user,
+}: {
+    admin: React.ReactNode;
+    tutor: React.ReactNode;
+    user: React.ReactNode;
+}) {
+    const userInfo = {
+        role: "admin",
+    };
     return (
         <SidebarProvider>
-            <AppSidebar />
+            <AppSidebar user={userInfo} />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 border-b">
                     <div className="flex items-center gap-2 px-3">
@@ -44,7 +55,13 @@ export default function Page({ children }: { children: React.ReactNode }) {
                         </Breadcrumb>
                     </div>
                 </header>
-                <div className="flex flex-1 flex-col gap-4 p-4">{children}</div>
+                <div className="flex flex-1 flex-col gap-4 p-4">
+                    {userInfo.role === "admin"
+                        ? admin
+                        : userInfo.role === "tutor"
+                          ? tutor
+                          : user}
+                </div>
             </SidebarInset>
         </SidebarProvider>
     );

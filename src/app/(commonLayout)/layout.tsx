@@ -4,7 +4,8 @@ import React from "react";
 const layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
-            <Navbar /> {children}
+            <Navbar />
+            <div className="container mx-auto px-28">{children}</div>
         </div>
     );
 };

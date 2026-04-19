@@ -15,32 +15,32 @@ import {
     SidebarMenuSubItem,
     SidebarRail,
 } from "@/components/ui/sidebar";
+import { adminRoutes } from "@/routes/adminRoutes";
+import { tutorRoutes } from "@/routes/tutorRoutes";
+import { userRoutes } from "@/routes/userRoutes";
+import { Route } from "@/types/routesType";
 
-// This is sample data.
-const data = {
-    navMain: [
-        {
-            title: "Skillbridge",
-            url: "/",
-            items: [
-                {
-                    title: "Alalytics",
-                    url: "dashboard/analytics",
-                },
-                {
-                    title: "User Management",
-                    url: "dashboard/analytics",
-                },
-                {
-                    title: "Category Management",
-                    url: "dashboard/category",
-                },
-            ],
-        },
-    ],
-};
-
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+    user,
+    ...props
+}: {
+    user: { role: string } & React.ComponentProps<typeof Sidebar>;
+}) {
+    let routes: Route[] = [];
+    switch (user.role) {
+        case "admin":
+            routes = adminRoutes;
+            break;
+        case "tutor":
+            routes = tutorRoutes;
+            break;
+        case "user":
+            routes = userRoutes;
+            break;
+        default:
+            routes = [];
+            break;
+    }
     return (
         <Sidebar {...props}>
             <SidebarHeader>
@@ -56,16 +56,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarContent>
                 <SidebarGroup>
                     <SidebarMenu>
-                        {data.navMain.map((item) => (
+                        {routes.map((item) => (
                             <SidebarMenuItem key={item.title}>
-                                <SidebarMenuButton asChild>
-                                    <a
-                                        href={item.url}
-                                        className="font-bold uppercase"
-                                    >
-                                        {item.title}
-                                    </a>
-                                </SidebarMenuButton>
+                                <SidebarMenuButton asChild></SidebarMenuButton>
                                 {item.items?.length ? (
                                     <SidebarMenuSub>
                                         {item.items.map((item) => (
