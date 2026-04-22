@@ -40,13 +40,29 @@ export const tutorService = {
             }
             return { data, error: null };
         } catch (err: unknown) {
-            return {
-                data: null,
-                error: {
-                    message: "something went wrong",
-                    details: err instanceof Error ? err.message : err,
-                },
-            };
+            return errorHandler(err);
         }
     },
+    getTutorById: async (id: string) => {
+        try {
+            const res = await fetch(`${app_url}/tutors/${id}`);
+            const data = await res.json();
+            if (!data.success) {
+                return { data: null, err: "something went wrong!" };
+            }
+            return { data: data, error: null };
+        } catch (err) {
+            return errorHandler(err);
+        }
+    },
+};
+
+const errorHandler = (err: unknown) => {
+    return {
+        data: null,
+        error: {
+            message: "Faild to fetch tutors",
+            details: err instanceof Error ? err.message : err,
+        },
+    };
 };
