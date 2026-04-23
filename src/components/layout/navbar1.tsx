@@ -1,5 +1,5 @@
 "use client";
-import { Menu } from "lucide-react";
+import { GraduationCap, LogOut, Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,8 +20,9 @@ import { ModeToggle } from "../Modetoggle";
 import { useEffect, useState } from "react";
 import { getUserSession } from "@/actions/user.actions";
 import { authClient } from "@/lib/auth-client";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
+import logo from "../../../public/logo.png";
 
 interface MenuItem {
     title: string;
@@ -46,7 +47,7 @@ interface Navbar1Props {
             title: string;
             url: string;
         };
-        logout: {
+        beTutor: {
             title: string;
             url: string;
         };
@@ -60,7 +61,7 @@ interface Navbar1Props {
 const Navbar = ({
     logo = {
         url: "/",
-        src: "https://i.pinimg.com/736x/0f/f1/aa/0ff1aaf838df1a77c702071b5eb2eedf.jpg",
+        src: "https://i.postimg.cc/xT9kq48w/logo-removebg.png",
         alt: "logo",
         title: "skillbridge",
     },
@@ -77,7 +78,7 @@ const Navbar = ({
     ],
     auth = {
         login: { title: "Login", url: "/login" },
-        logout: { title: "Logout", url: "/login" },
+        beTutor: { title: "Be a Tutor", url: "/tutor-request" },
         signup: { title: "Register", url: "/register" },
     },
     className,
@@ -122,7 +123,7 @@ const Navbar = ({
                         >
                             <img
                                 src={logo.src}
-                                className="h-8 w-auto dark:invert"
+                                className="h-9 w-auto dark:invert"
                                 alt={logo.alt}
                             />
                             <span className="hidden font-bold uppercase tracking-tight sm:inline-block">
@@ -144,12 +145,26 @@ const Navbar = ({
                     <div className="hidden items-center justify-end gap-3 lg:flex">
                         <ModeToggle />
                         {session ? (
-                            <Button
-                                onClick={() => handleLogout()}
-                                variant="destructive"
-                            >
-                                Logout
-                            </Button>
+                            <div className="flex items-center gap-2">
+                                <Button
+                                    asChild
+                                    variant="secondary"
+                                    className="bg-blue-500 hover:bg-blue-500"
+                                    size="lg"
+                                >
+                                    <Link href={auth.beTutor.url}>
+                                        <GraduationCap className="w-5 h-5" />{" "}
+                                        {auth.beTutor.title}
+                                    </Link>
+                                </Button>
+                                <Button
+                                    onClick={() => handleLogout()}
+                                    variant="destructive"
+                                >
+                                    <LogOut className="w-5 h-5" />
+                                    Logout
+                                </Button>
+                            </div>
                         ) : (
                             <div className="flex items-center gap-2">
                                 <Button asChild variant="ghost" size="sm">
@@ -185,7 +200,7 @@ const Navbar = ({
                                 className="flex flex-col gap-0 pr-0"
                             >
                                 <SheetHeader className="px-6 py-4 border-b">
-                                    <SheetTitle className="text-left">
+                                    <SheetTitle className="text-left uppercase">
                                         <Link
                                             href={logo.url}
                                             className="flex items-center gap-2"
@@ -210,22 +225,46 @@ const Navbar = ({
                                     </div>
                                 </div>
 
-                                <div className="mt-auto border-t p-6 flex flex-col gap-3">
-                                    <Button>Logout</Button>
-                                    <Button
-                                        asChild
-                                        variant="outline"
-                                        className="w-full"
-                                    >
-                                        <Link href={auth.login.url}>
-                                            {auth.login.title}
-                                        </Link>
-                                    </Button>
-                                    <Button asChild className="w-full">
-                                        <Link href={auth.signup.url}>
-                                            {auth.signup.title}
-                                        </Link>
-                                    </Button>
+                                <div className="mt-auto border-t p-6 ">
+                                    {session ? (
+                                        <div className="flex flex-col gap-3">
+                                            <Button
+                                                asChild
+                                                variant="secondary"
+                                                className="bg-blue-500 hover:bg-blue-500"
+                                                size="lg"
+                                            >
+                                                <Link href={auth.beTutor.url}>
+                                                    <GraduationCap className="w-5 h-5" />{" "}
+                                                    {auth.beTutor.title}
+                                                </Link>
+                                            </Button>
+                                            <Button
+                                                onClick={() => handleLogout()}
+                                                variant="destructive"
+                                            >
+                                                <LogOut className="w-5 h-5" />
+                                                Logout
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <div className="flex flex-col gap-3">
+                                            <Button
+                                                asChild
+                                                variant="outline"
+                                                className="w-full"
+                                            >
+                                                <Link href={auth.login.url}>
+                                                    {auth.login.title}
+                                                </Link>
+                                            </Button>
+                                            <Button asChild className="w-full">
+                                                <Link href={auth.signup.url}>
+                                                    {auth.signup.title}
+                                                </Link>
+                                            </Button>
+                                        </div>
+                                    )}
                                 </div>
                             </SheetContent>
                         </Sheet>
