@@ -16,13 +16,12 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
-import { ModeToggle } from "../Modetoggle";
-import { useEffect, useState } from "react";
+import { ModeToggle } from "./Modetoggle";
+import { useEffect } from "react";
 import { getUserSession } from "@/actions/user.actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/auth.store";
-import logo from "../../../public/logo.png";
 
 interface MenuItem {
     title: string;
@@ -66,10 +65,17 @@ const Navbar = ({
         title: "skillbridge",
     },
     menu = [
-        { title: "Home", url: "/" },
         {
-            title: "Tutors",
+            title: "Sessions",
+            url: "/sessions",
+        },
+        {
+            title: "Tutor Hub",
             url: "/tutors",
+        },
+        {
+            title: "Categories",
+            url: "/categories",
         },
         {
             title: "Dashboard",
@@ -91,7 +97,7 @@ const Navbar = ({
             setSession(data?.session);
         })();
     }, []);
-    console.log(session);
+    // console.log(session);
 
     const handleLogout = async () => {
         await authClient.signOut({
@@ -149,7 +155,7 @@ const Navbar = ({
                                 <Button
                                     asChild
                                     variant="secondary"
-                                    className="bg-blue-500 hover:bg-blue-500"
+                                    className="bg-blue-200 hover:bg-blue-200  text-gray-900"
                                     size="lg"
                                 >
                                     <Link href={auth.beTutor.url}>

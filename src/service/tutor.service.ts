@@ -6,11 +6,11 @@ interface ServiceOptions {
     revalidate?: number;
 }
 interface GetTutorParams {
-    searchValue?: string;
+    search?: string;
     rating?: number;
-    page?: number;
-    limit?: number;
-    skip?: number;
+    page?: string;
+    limit?: string;
+    skip?: string;
 }
 export const tutorService = {
     getTutors: async (params?: GetTutorParams, options?: ServiceOptions) => {
