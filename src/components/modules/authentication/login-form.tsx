@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+
 import {
     Card,
     CardContent,
@@ -23,6 +24,9 @@ import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Separator } from "@/components/ui/separator";
+import { useAuthStore } from "@/store/auth.store";
+import { getUserSession } from "@/actions/user.actions";
 
 const formSchema = z.object({
     email: z.string().email("Please enter a valid email address"),
@@ -34,6 +38,14 @@ export function LoginForm({
     ...props
 }: React.ComponentProps<typeof Card>) {
     const router = useRouter();
+
+    const { setSession } = useAuthStore();
+    const handleWithGoogle = async () => {
+        await authClient.signIn.social({
+            provider: "google",
+            callbackURL: "http://localhost:3000",
+        });
+    };
     const form = useForm({
         defaultValues: {
             email: "",
@@ -51,7 +63,8 @@ export function LoginForm({
                     email: value.email.trim().toLowerCase(),
                 };
 
-                const { data, error } = await authClient.signIn.email(payload);
+                const { error } = await authClient.signIn.email(payload);
+                // console.log(data);
 
                 if (error) {
                     toast.error(error.message || "Invalid credentials.", {
@@ -59,9 +72,11 @@ export function LoginForm({
                     });
                     return;
                 }
-
+                const { data } = await getUserSession();
+                setSession(data?.session);
                 toast.success("Welcome back!", { id: toastId });
                 form.reset();
+
                 router.push("/");
             } catch (err) {
                 toast.error("Something went wrong. Please try again later.", {
@@ -87,6 +102,13 @@ export function LoginForm({
                 <CardDescription>
                     Enter your credentials to access your account
                 </CardDescription>
+                <Separator />
+                <Button
+                    onClick={() => handleWithGoogle()}
+                    className="bg-mist-700  text-gray-300 px-5 rounded-3xl"
+                >
+                    Continue With Google
+                </Button>
             </CardHeader>
             <CardContent>
                 <form

@@ -28,7 +28,7 @@ export default async function Page({
 }) {
     const { data } = await userService.getSession();
     const role = data.user.role;
-    console.log("user role from dashboard layout : ", role);
+    // console.log("user role from dashboard layout : ", role);
 
     const roleView = {
         [Roles.admin]: admin,

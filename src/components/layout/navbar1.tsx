@@ -1,5 +1,4 @@
 "use client";
-
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -18,6 +17,11 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { ModeToggle } from "../Modetoggle";
+import { useEffect, useState } from "react";
+import { getUserSession } from "@/actions/user.actions";
+import { authClient } from "@/lib/auth-client";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth.store";
 
 interface MenuItem {
     title: string;
@@ -42,6 +46,10 @@ interface Navbar1Props {
             title: string;
             url: string;
         };
+        logout: {
+            title: string;
+            url: string;
+        };
         signup: {
             title: string;
             url: string;
@@ -54,7 +62,7 @@ const Navbar = ({
         url: "/",
         src: "https://i.pinimg.com/736x/0f/f1/aa/0ff1aaf838df1a77c702071b5eb2eedf.jpg",
         alt: "logo",
-        title: "DailyDose",
+        title: "skillbridge",
     },
     menu = [
         { title: "Home", url: "/" },
@@ -69,10 +77,31 @@ const Navbar = ({
     ],
     auth = {
         login: { title: "Login", url: "/login" },
+        logout: { title: "Logout", url: "/login" },
         signup: { title: "Register", url: "/register" },
     },
     className,
 }: Navbar1Props) => {
+    const router = useRouter();
+    const { session, setSession, clearSession } = useAuthStore();
+    useEffect(() => {
+        (async () => {
+            const { data } = await getUserSession();
+            setSession(data?.session);
+        })();
+    }, []);
+    console.log(session);
+
+    const handleLogout = async () => {
+        await authClient.signOut({
+            fetchOptions: {
+                onSuccess: () => {
+                    clearSession();
+                    router.replace("/login");
+                },
+            },
+        });
+    };
     return (
         <header
             className={cn(
@@ -96,7 +125,7 @@ const Navbar = ({
                                 className="h-8 w-auto dark:invert"
                                 alt={logo.alt}
                             />
-                            <span className="hidden font-bold tracking-tight sm:inline-block">
+                            <span className="hidden font-bold uppercase tracking-tight sm:inline-block">
                                 {logo.title}
                             </span>
                         </Link>
@@ -114,18 +143,27 @@ const Navbar = ({
                     {/* Column 3: Actions (Right) */}
                     <div className="hidden items-center justify-end gap-3 lg:flex">
                         <ModeToggle />
-                        <div className="flex items-center gap-2">
-                            <Button asChild variant="ghost" size="sm">
-                                <Link href={auth.login.url}>
-                                    {auth.login.title}
-                                </Link>
+                        {session ? (
+                            <Button
+                                onClick={() => handleLogout()}
+                                variant="destructive"
+                            >
+                                Logout
                             </Button>
-                            <Button asChild size="sm">
-                                <Link href={auth.signup.url}>
-                                    {auth.signup.title}
-                                </Link>
-                            </Button>
-                        </div>
+                        ) : (
+                            <div className="flex items-center gap-2">
+                                <Button asChild variant="ghost" size="sm">
+                                    <Link href={auth.login.url}>
+                                        {auth.login.title}
+                                    </Link>
+                                </Button>
+                                <Button asChild size="sm">
+                                    <Link href={auth.signup.url}>
+                                        {auth.signup.title}
+                                    </Link>
+                                </Button>
+                            </div>
+                        )}
                     </div>
 
                     {/* Mobile: Toggle + Menu (Visible only on mobile) */}
@@ -173,6 +211,7 @@ const Navbar = ({
                                 </div>
 
                                 <div className="mt-auto border-t p-6 flex flex-col gap-3">
+                                    <Button>Logout</Button>
                                     <Button
                                         asChild
                                         variant="outline"

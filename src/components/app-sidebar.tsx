@@ -1,7 +1,5 @@
 "use client";
-
 import * as React from "react";
-
 import {
     Sidebar,
     SidebarContent,
@@ -27,10 +25,10 @@ export function AppSidebar({
 }: {
     user: { role: string } & React.ComponentProps<typeof Sidebar>;
 }) {
-    console.log("user role from app sidebar layout : ", user.role);
+    // console.log("user role from app sidebar layout : ", user.role);
 
     let routes: Route[] = [];
-    console.log("start:", routes);
+    // console.log("start:", routes);
     switch (user.role) {
         case Roles.admin:
             routes = adminRoutes;
@@ -45,7 +43,7 @@ export function AppSidebar({
             routes = [];
             break;
     }
-    console.log("end :", routes);
+    // console.log("end :", routes);
 
     return (
         <Sidebar {...props}>

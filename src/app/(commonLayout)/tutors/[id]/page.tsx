@@ -16,8 +16,8 @@ const TutorDetails = async ({
     const { id } = await params;
     const { data } = await tutorService.getTutorById(id);
     const tutor = data.data;
-    console.log(tutor);
-    console.log(tutor.reviews);
+    // console.log(tutor);
+    // console.log(tutor.reviews);
 
     if (!tutor) {
         return (
