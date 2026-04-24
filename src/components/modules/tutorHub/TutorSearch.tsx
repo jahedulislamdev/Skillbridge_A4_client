@@ -3,7 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const TutorSearch = () => {
     const searchParams = useSearchParams();
@@ -22,7 +22,7 @@ const TutorSearch = () => {
     };
 
     return (
-        <div>
+        <div className="flex justify-between items-center">
             <form
                 onSubmit={(e) => {
                     e.preventDefault();

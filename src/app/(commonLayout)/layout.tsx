@@ -7,7 +7,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     return (
         <div>
             <Navbar />
-            <div className="md:px-10 lg:px-20">{children}</div>
+            <div className="md:px-10 ">{children}</div>
             <Footer />
             <Toaster richColors position="top-right" />
         </div>

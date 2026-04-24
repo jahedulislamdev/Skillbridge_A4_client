@@ -1,11 +1,21 @@
 import { tutorService } from "@/service/tutor.service";
-import { Search, BookOpen, Users, Layers, TrendingUp } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { BookOpen, Users, Layers, TrendingUp, Filter } from "lucide-react";
+
 import { Separator } from "@/components/ui/separator";
 import { PaginationController } from "@/components/layout/Pagination";
 import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
 import { StatPill } from "@/components/modules/tutorHub/StatPills";
 import TutorSearch from "@/components/modules/tutorHub/TutorSearch";
+import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
+// ✅ Import VisuallyHidden if available, or use the accessible shadcn pattern
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+    SheetTitle,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default async function TutorHub({
     searchParams,
@@ -15,19 +25,22 @@ export default async function TutorHub({
         page: string;
         limit: string;
         rating: number;
+        priceMin: number;
+        priceMax: number;
     }>;
 }) {
-    const { limit, page, rating, search } = await searchParams;
+    const { limit, page, rating, search, priceMin, priceMax } =
+        await searchParams;
     const { data } = await tutorService.getTutors({
         limit,
         search,
         page,
         rating,
+        priceMin,
+        priceMax,
     });
 
     const tutors: any[] = data?.data?.tutors ?? [];
-    // console.log(data?.data.meta);
-
     const pagination = data?.data?.meta || {
         limit: 10,
         page: 1,
@@ -36,90 +49,126 @@ export default async function TutorHub({
     };
 
     const totalSubjects = 0;
-    const avgRating = 0;
+    const avgRating =
+        tutors.length > 0
+            ? tutors.reduce((sum, tutor) => sum + (tutor.avgRating || 0), 0) /
+              tutors.length
+            : 0;
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="mx-auto max-w-7xl px-4 py-10 md:px-8 md:py-14 space-y-8">
-                {/* ── Header ── */}
-                <header className="space-y-6">
-                    <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-widest text-primary font-medium">
+            <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12 space-y-8">
+                {/* ── Header Section ── */}
+                <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                    <div className="space-y-3">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">
                             Learning Platform
                         </p>
-                        <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
+                        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
                             Find your{" "}
-                            <span className="text-blue-500 ">perfect</span>{" "}
+                            <span className="text-blue-500 italic">
+                                perfect
+                            </span>{" "}
                             tutor
                         </h1>
-                        <p className="text-muted-foreground text-sm max-w-md leading-relaxed">
+                        <p className="text-muted-foreground text-sm md:text-base max-w-prose leading-relaxed">
                             Expert educators ready to guide you — from
                             foundational skills to advanced mastery.
                         </p>
                     </div>
 
-                    {/* Search + stats */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-wrap">
-                        {/* <form className="relative w-full sm:max-w-sm">
-                            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground pointer-events-none" />
-                            <Input
-                                name="query"
-                                placeholder="Search by name or subject…"
-                                className="pl-10 h-10 rounded-xl bg-card"
-                            />
-                        </form> */}
-                        <TutorSearch />
-                        {/* ──render satate pills── */}
-                        {tutors.length > 0 && (
-                            <div className="flex flex-wrap gap-2">
-                                <StatPill
-                                    icon={Users}
-                                    value={tutors.length}
-                                    label="Tutors"
-                                />
-                                <StatPill
-                                    icon={Layers}
-                                    value={totalSubjects}
-                                    label="Subjects"
-                                />
-                                <StatPill
-                                    icon={TrendingUp}
-                                    value={avgRating}
-                                    label="Avg Rating"
-                                />
-                            </div>
-                        )}
+                    <div className="flex gap-3 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
+                        <StatPill
+                            icon={Users}
+                            value={pagination.total}
+                            label="Tutors"
+                        />
+                        <StatPill
+                            icon={Layers}
+                            value={totalSubjects}
+                            label="Subjects"
+                        />
+                        <StatPill
+                            icon={TrendingUp}
+                            value={avgRating}
+                            label="Rating"
+                        />
                     </div>
                 </header>
 
-                <Separator />
+                <Separator className="bg-border/60" />
 
-                {/* ── Grid ── */}
-                {tutors.length > 0 ? (
-                    <div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 items-start">
-                            {tutors.map((tutor: any) => (
-                                <TutorCard key={tutor.id} tutor={tutor} />
-                            ))}
-                        </div>
-                        <PaginationController meta={pagination} />
+                {/* ── Search & Mobile Filter Trigger ── */}
+                <div className="flex flex-col sm:flex-row gap-4 items-center">
+                    <div className="w-full sm:flex-1">
+                        <TutorSearch />
                     </div>
-                ) : (
-                    <div className="flex flex-col items-center justify-center py-32 rounded-2xl border border-dashed border-border bg-muted/20 gap-4 text-center">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
-                            <BookOpen className="h-6 w-6 text-muted-foreground" />
-                        </div>
-                        <div>
-                            <h3 className="text-base font-semibold text-foreground">
-                                No tutors found
-                            </h3>
-                            <p className="text-sm text-muted-foreground mt-1">
-                                Try adjusting your search — more educators join
-                                every week.
-                            </p>
-                        </div>
+
+                    <div className="md:hidden w-full sm:w-auto">
+                        <Sheet>
+                            <SheetTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className="w-full gap-2 border-dashed"
+                                >
+                                    <Filter size={16} />
+                                    Filters
+                                </Button>
+                            </SheetTrigger>
+                            <SheetContent
+                                side="left"
+                                className="w-[300px] p-0 overflow-y-auto"
+                            >
+                                {/* ✅ Accessibility Fix: Visually Hidden Title */}
+                                <VisuallyHidden.Root>
+                                    <SheetTitle>Tutor Filters</SheetTitle>
+                                </VisuallyHidden.Root>
+
+                                <TutorFilters className="border-0 shadow-none w-full" />
+                            </SheetContent>
+                        </Sheet>
                     </div>
-                )}
+                </div>
+
+                {/* ── Main Content Layout ── */}
+                <div className="flex flex-col md:flex-row gap-8 items-start">
+                    <aside className="hidden md:block sticky top-24 shrink-0">
+                        <TutorFilters />
+                    </aside>
+
+                    <main className="flex-1 w-full space-y-8">
+                        {tutors.length > 0 ? (
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                                    {tutors.map((tutor: any) => (
+                                        <TutorCard
+                                            key={tutor.id}
+                                            tutor={tutor}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="pt-4 border-t">
+                                    <PaginationController meta={pagination} />
+                                </div>
+                            </>
+                        ) : (
+                            <div className="flex w-full flex-col items-center justify-center py-24 rounded-3xl border-2 border-dashed border-border bg-muted/10 gap-5 text-center">
+                                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted/50">
+                                    <BookOpen className="h-8 w-8 text-muted-foreground/60" />
+                                </div>
+                                <div className="max-w-sm px-4">
+                                    <h3 className="text-xl font-bold text-foreground">
+                                        No tutors match your criteria
+                                    </h3>
+                                    <p className="text-sm text-muted-foreground mt-2">
+                                        Try adjusting your filters or search
+                                        terms.
+                                    </p>
+                                </div>
+                            </div>
+                        )}
+                    </main>
+                </div>
             </div>
         </div>
     );

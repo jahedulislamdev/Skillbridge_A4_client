@@ -11,6 +11,8 @@ interface GetTutorParams {
     page?: string;
     limit?: string;
     skip?: string;
+    priceMin?: number;
+    priceMax?: number;
 }
 export const tutorService = {
     getTutors: async (params?: GetTutorParams, options?: ServiceOptions) => {
