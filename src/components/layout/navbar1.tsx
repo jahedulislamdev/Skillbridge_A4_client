@@ -84,7 +84,7 @@ const Navbar = ({
     ],
     auth = {
         login: { title: "Login", url: "/login" },
-        beTutor: { title: "Be a Tutor", url: "/tutor-request" },
+        beTutor: { title: "Be a Tutor", url: "/tutor-registration" },
         signup: { title: "Register", url: "/register" },
     },
     className,

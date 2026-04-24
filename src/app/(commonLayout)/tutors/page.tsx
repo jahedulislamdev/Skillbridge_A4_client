@@ -7,7 +7,7 @@ import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
 import { StatPill } from "@/components/modules/tutorHub/StatPills";
 import TutorSearch from "@/components/modules/tutorHub/TutorSearch";
 import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
-// ✅ Import VisuallyHidden if available, or use the accessible shadcn pattern
+
 import {
     Sheet,
     SheetContent,
@@ -31,14 +31,17 @@ export default async function TutorHub({
 }) {
     const { limit, page, rating, search, priceMin, priceMax } =
         await searchParams;
-    const { data } = await tutorService.getTutors({
-        limit,
-        search,
-        page,
-        rating,
-        priceMin,
-        priceMax,
-    });
+    const { data } = await tutorService.getTutors(
+        {
+            limit,
+            search,
+            page,
+            rating,
+            priceMin,
+            priceMax,
+        },
+        { revalidate: 60 },
+    );
 
     const tutors: any[] = data?.data?.tutors ?? [];
     const pagination = data?.data?.meta || {
@@ -61,15 +64,8 @@ export default async function TutorHub({
                 {/* ── Header Section ── */}
                 <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div className="space-y-3">
-                        <p className="text-[10px] uppercase tracking-[0.2em] text-primary font-bold">
-                            Learning Platform
-                        </p>
-                        <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-                            Find your{" "}
-                            <span className="text-blue-500 italic">
-                                perfect
-                            </span>{" "}
-                            tutor
+                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-indigo-700 to-indigo-100 bg-clip-text text-transparent">
+                            Find your perfect tutor
                         </h1>
                         <p className="text-muted-foreground text-sm md:text-base max-w-prose leading-relaxed">
                             Expert educators ready to guide you — from
@@ -119,7 +115,6 @@ export default async function TutorHub({
                                 side="left"
                                 className="w-[300px] p-0 overflow-y-auto"
                             >
-                                {/* ✅ Accessibility Fix: Visually Hidden Title */}
                                 <VisuallyHidden.Root>
                                     <SheetTitle>Tutor Filters</SheetTitle>
                                 </VisuallyHidden.Root>

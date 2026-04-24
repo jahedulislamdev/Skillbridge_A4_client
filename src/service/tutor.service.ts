@@ -1,4 +1,5 @@
 import { env } from "@/env";
+import { errorHandler } from "@/helper/errHandler";
 
 const app_url = env.API_URL;
 interface ServiceOptions {
@@ -57,14 +58,4 @@ export const tutorService = {
             return errorHandler(err);
         }
     },
-};
-
-const errorHandler = (err: unknown) => {
-    return {
-        data: null,
-        error: {
-            message: "Faild to fetch tutors",
-            details: err instanceof Error ? err.message : err,
-        },
-    };
 };

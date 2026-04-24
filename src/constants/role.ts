@@ -3,3 +3,8 @@ export const Roles = {
     tutor: "TUTOR",
     user: "USER",
 };
+export enum UserRoles {
+    ADMIN,
+    TUTOR,
+    USER,
+}
