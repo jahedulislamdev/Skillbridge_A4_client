@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { TutorDetail } from "@/types/tutorDetails";
 import { Check, MessageSquare } from "lucide-react";
+import Link from "next/link";
 
 const StickySidebar = ({ tutor }: { tutor: TutorDetail }) => {
     return (
@@ -45,14 +46,14 @@ const StickySidebar = ({ tutor }: { tutor: TutorDetail }) => {
                                 <span>Direct chat with tutor</span>
                             </div>
                         </div>
-
-                        <Button className="w-full h-14 text-md font-bold shadow-xl shadow-primary/20">
-                            Book a Session
-                        </Button>
-
+                        <Link href={"/sessions"}>
+                            <Button className="w-full cursor-pointer h-14 text-md font-bold shadow-xl shadow-primary/20">
+                                Book a Session
+                            </Button>
+                        </Link>
                         <Button
                             variant="outline"
-                            className="w-full h-12 font-semibold"
+                            className="w-full mt-3 h-12 font-semibold"
                         >
                             Inquiry via Message
                         </Button>

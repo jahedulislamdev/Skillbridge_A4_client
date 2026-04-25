@@ -3,17 +3,18 @@ import { errorHandler } from "@/helper/errHandler";
 
 const api_url = env.API_URL;
 //* we define availabe slots to avalilabe sessions
-export const slotService = {
-    getSlots: async () => {
+export const reviewService = {
+    getReviews: async () => {
         try {
-            const res = await fetch(`${api_url}/slots`);
+            const res = await fetch(`${api_url}/reviews`);
             const data = await res.json();
             if (!data.success) {
-                return { data: null, err: "something went wrong!" };
+                return { data: null, err: data.message };
             }
+
             // console.log(data);
 
-            return { data, error: null };
+            return { data: data.data, error: null };
         } catch (err) {
             return errorHandler(err);
         }

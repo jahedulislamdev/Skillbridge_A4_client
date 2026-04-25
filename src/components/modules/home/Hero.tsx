@@ -3,13 +3,14 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import onlineLearning from "../../../../public/online_learning.svg";
 import Link from "next/link";
+import { Avatar } from "@/components/ui/avatar";
 
 const HeroSection = () => {
     return (
-        <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background pt-20 pb-12 md:pt-0">
+        <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-background pt-6 sm:pt-10 pb-12 md:pt-4">
             {/* Background Ambient Glows */}
-            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-primary/10 blur-[120px] rounded-full -z-10" />
-            <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[400px] h-[400px] bg-purple-500/10 blur-[100px] rounded-full -z-10" />
+            <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-125 h-125 bg-primary/10 blur-[120px] rounded-full -z-10" />
+            <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-100 h-100 bg-purple-500/10 blur-[100px] rounded-full -z-10" />
 
             <div className="container mx-auto px-6">
                 <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -110,21 +111,21 @@ const HeroSection = () => {
                             </div>
                         </div>
 
-                        <div className="absolute bottom-10 -right-6 z-20 bg-card p-4 rounded-2xl shadow-2xl border border-border animate-pulse hidden sm:block">
+                        {/* <div className="absolute bottom-10 -right-6 z-20 bg-card p-4 rounded-2xl shadow-2xl border border-border   hidden sm:block">
                             <div className="flex items-center gap-3">
                                 <div className="flex -space-x-2">
                                     {[1, 2, 3].map((i) => (
-                                        <div
+                                        <Avatar
                                             key={i}
                                             className="w-8 h-8 rounded-full border-2 border-card bg-muted"
-                                        />
+                                        ></Avatar>
                                     ))}
                                 </div>
                                 <p className="text-sm font-bold">
                                     4.9/5 Rating
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/* Main Image Container */}
                         <div className="relative aspect-square w-full max-w-[500px] mx-auto lg:max-w-none">

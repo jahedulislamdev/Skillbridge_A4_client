@@ -3,7 +3,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Star, Briefcase, ShieldCheck, ArrowLeft, Share2 } from "lucide-react";
+import {
+    Star,
+    Briefcase,
+    ShieldCheck,
+    ArrowLeft,
+    Share2,
+    BookOpen,
+} from "lucide-react";
 import Link from "next/link";
 import StickySidebar from "@/components/modules/tutorDetails/StickySidebar";
 import TutorDetailsTabs from "@/components/modules/tutorDetails/TutorDetailsTabs";
@@ -16,8 +23,6 @@ const TutorDetails = async ({
     const { id } = await params;
     const { data } = await tutorService.getTutorById(id);
     const tutor = data.data;
-    // console.log(tutor);
-    // console.log(tutor.reviews);
 
     if (!tutor) {
         return (
@@ -48,7 +53,7 @@ const TutorDetails = async ({
                         </Link>
                     </Button>
                     <Button variant="ghost" size="icon">
-                        <Share2 size="7" />
+                        <Share2 className="w-4 h-4" />
                     </Button>
                 </div>
             </div>
@@ -65,7 +70,7 @@ const TutorDetails = async ({
                                         src={tutor.user.image}
                                         alt={tutor.user.name}
                                     />
-                                    <AvatarFallback className="text-4xl">
+                                    <AvatarFallback className="text-4xl font-bold">
                                         {tutor.user.name.charAt(0)}
                                     </AvatarFallback>
                                 </Avatar>
@@ -84,13 +89,13 @@ const TutorDetails = async ({
                                             variant="outline"
                                             className="bg-primary/5 text-primary border-primary/20 font-semibold px-3 py-1"
                                         >
-                                            {tutor.status === "APPROVED"
+                                            {tutor.averageRating > 4.5
                                                 ? "Top Rated"
-                                                : "Pro Tutor"}
+                                                : "Verified Pro"}
                                         </Badge>
                                     </div>
-                                    <p className="text-xl text-muted-foreground">
-                                        Expert in Academic Excellence
+                                    <p className="text-xl text-muted-foreground font-medium">
+                                        Professional Educator
                                     </p>
                                 </div>
 
@@ -109,6 +114,34 @@ const TutorDetails = async ({
                                         <Briefcase className="w-5 h-5 mr-2 opacity-70" />
                                         {tutor.experienceYears}+ Years
                                         Experience
+                                    </div>
+                                </div>
+
+                                {/* Subjects Section */}
+                                <div className="space-y-3 pt-2">
+                                    <div className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-muted-foreground">
+                                        <BookOpen className="w-4 h-4" />
+                                        Specializes In
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {tutor.tutorSubjects &&
+                                        tutor.tutorSubjects.length > 0 ? (
+                                            tutor.tutorSubjects?.map(
+                                                (sub: any) => (
+                                                    <Badge
+                                                        key={sub.subjects.id}
+                                                        variant="secondary"
+                                                        className="rounded-lg px-4 py-1.5 bg-muted/50 hover:bg-primary/10 hover:text-primary transition-colors border-none font-medium"
+                                                    >
+                                                        {sub.subjects.name}
+                                                    </Badge>
+                                                ),
+                                            )
+                                        ) : (
+                                            <span className="text-sm text-muted-foreground italic">
+                                                General Education
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                             </div>
