@@ -23,7 +23,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import * as z from "zod";
 import { tutorService } from "@/service/tutor.service";
-import { createTutor } from "@/actions/tutor.action";
+import { createTutor } from "@/actions/tutor.actions";
 import { toast } from "sonner";
 import Link from "next/link";
 

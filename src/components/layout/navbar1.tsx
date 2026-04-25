@@ -74,10 +74,6 @@ const Navbar = ({
             url: "/tutors",
         },
         {
-            title: "Categories",
-            url: "/categories",
-        },
-        {
             title: "Dashboard",
             url: "/dashboard",
         },

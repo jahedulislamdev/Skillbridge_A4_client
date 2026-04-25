@@ -11,6 +11,8 @@ export const slotService = {
             if (!data.success) {
                 return { data: null, err: "something went wrong!" };
             }
+            console.log(data);
+
             return { data, error: null };
         } catch (err) {
             return errorHandler(err);

@@ -1,8 +1,6 @@
 import {
     Sparkles,
     Languages,
-    Palette,
-    Music,
     Code2,
     ChevronRight,
     ArrowRight,
@@ -69,14 +67,6 @@ const CategorySection = () => {
                             Instractors.
                         </p>
                     </div>
-                    <Button
-                        variant="outline"
-                        size={"sm"}
-                        className="group rounded-full border-primary/20 px-6 hover:bg-primary hover:text-white"
-                    >
-                        View All Categories
-                        <ChevronRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Button>
                 </div>
 
                 {/* Grid Layout */}
@@ -102,10 +92,10 @@ const CategorySection = () => {
                                     {item.description}
                                 </p>
                                 <div className="pt-2">
-                                    <button className="flex items-center text-xs font-bold uppercase tracking-widest text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-2">
+                                    {/* <button className="flex items-center text-xs font-bold uppercase tracking-widest text-primary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-2">
                                         Explore Path{" "}
                                         <ArrowRight className="ml-2 h-3 w-3" />
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                         </div>
