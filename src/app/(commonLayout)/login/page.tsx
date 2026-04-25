@@ -16,7 +16,7 @@ export default function LoginPage() {
 
                 <div className="relative z-10 max-w-lg text-center space-y-8">
                     {/* Your Vector Image */}
-                    <div className="relative w-full aspect-square max-w-105 mx-auto drop-shadow-2xl animate-in fade-in zoom-in duration-700">
+                    <div className="relative w-full aspect-square max-w-105 mx-auto drop-shadow-2xl animate-in fade-in slide-in-from-bottom-12 duration-1000">
                         <Image
                             src={loginImage}
                             alt="Login Illustration"

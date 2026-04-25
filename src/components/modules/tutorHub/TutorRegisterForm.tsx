@@ -17,10 +17,15 @@ import {
     Banknote,
     Briefcase,
     BookMarked,
+    Home,
 } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import * as z from "zod";
+import { tutorService } from "@/service/tutor.service";
+import { createTutor } from "@/actions/tutor.action";
+import { toast } from "sonner";
+import Link from "next/link";
 
 interface TutorRegisterFormProps {
     user: { id: string; name: string };
@@ -87,13 +92,9 @@ function SuccessScreen({ name }: { name: string }) {
                     </p>
                 </div>
 
-                <Button
-                    variant="outline"
-                    className="w-full gap-2"
-                    onClick={() => window.location.reload()}
-                >
-                    <RotateCcw className="w-3.5 h-3.5" />
-                    Back to home
+                <Button variant="outline" className="w-full gap-2">
+                    <Home className="w-3.5 h-3.5" />
+                    <Link href={"/"}> Back to home</Link>
                 </Button>
             </div>
         </div>
@@ -116,9 +117,26 @@ export default function TutorRegisterForm({
         },
         validators: { onChange: formSchema },
         onSubmit: async ({ value }) => {
-            await new Promise((r) => setTimeout(r, 1500));
-            console.log("FORM DATA 👉", value);
-            setSubmitted(true);
+            const toastId = toast.loading("Creating tutor account...");
+            try {
+                const res = await createTutor(value);
+                if (!res.success) {
+                    return toast.error(res.message, {
+                        id: toastId,
+                    });
+                }
+                if (res.success) {
+                    toast.success("Tutor Request Successfully Send!", {
+                        id: toastId,
+                    });
+                }
+                form.reset();
+                setSubmitted(true);
+            } catch (err) {
+                toast.error("Something went wrong. Please try again later.", {
+                    id: toastId,
+                });
+            }
         },
     });
 

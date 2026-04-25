@@ -51,13 +51,6 @@ export default async function TutorHub({
         total: 0,
     };
 
-    const totalSubjects = 0;
-    const avgRating =
-        tutors.length > 0
-            ? tutors.reduce((sum, tutor) => sum + (tutor.avgRating || 0), 0) /
-              tutors.length
-            : 0;
-
     return (
         <div className="min-h-screen bg-background">
             <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12 space-y-8">
@@ -78,16 +71,6 @@ export default async function TutorHub({
                             icon={Users}
                             value={pagination.total}
                             label="Tutors"
-                        />
-                        <StatPill
-                            icon={Layers}
-                            value={totalSubjects}
-                            label="Subjects"
-                        />
-                        <StatPill
-                            icon={TrendingUp}
-                            value={avgRating}
-                            label="Rating"
                         />
                     </div>
                 </header>
@@ -113,7 +96,7 @@ export default async function TutorHub({
                             </SheetTrigger>
                             <SheetContent
                                 side="left"
-                                className="w-[300px] p-0 overflow-y-auto"
+                                className="w-75 p-0 overflow-y-auto"
                             >
                                 <VisuallyHidden.Root>
                                     <SheetTitle>Tutor Filters</SheetTitle>

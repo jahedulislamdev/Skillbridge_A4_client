@@ -1,5 +1,6 @@
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
+import { cookies } from "next/headers";
 
 const app_url = env.API_URL;
 interface ServiceOptions {
@@ -15,6 +16,13 @@ interface GetTutorParams {
     priceMin?: number;
     priceMax?: number;
 }
+export interface TutorData {
+    bio: string;
+    hourlyRate: number;
+    experienceYears?: number;
+    subjectIds: string[];
+}
+
 export const tutorService = {
     getTutors: async (params?: GetTutorParams, options?: ServiceOptions) => {
         try {
@@ -56,6 +64,24 @@ export const tutorService = {
             return { data: data, error: null };
         } catch (err) {
             return errorHandler(err);
+        }
+    },
+    createTutor: async (data: TutorData) => {
+        try {
+            // console.log("data from tutor service: ", data);
+
+            const cookieStore = await cookies();
+            const res = await fetch(`${app_url}/tutors`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString(),
+                },
+                body: JSON.stringify(data),
+            });
+            return await res.json();
+        } catch (err) {
+            errorHandler(err);
         }
     },
 };
