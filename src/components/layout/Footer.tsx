@@ -1,104 +1,134 @@
 import Link from "next/link";
-import { FaFacebook, FaWhatsapp } from "react-icons/fa";
+import { FaFacebook, FaWhatsapp, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
+    const currentYear = new Date().getFullYear();
+
     return (
-        <footer className="border-t bg-background">
-            <div className="container mx-auto px-6 py-10">
-                {/* TOP */}
-                <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-                    {/* Brand */}
-                    <div className="space-y-2">
-                        <h2 className="text-lg font-semibold tracking-tight">
+        <footer className="border-t bg-background text-foreground">
+            <div className="container mx-auto px-6 py-12">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+                    {/* Column 1: Brand */}
+                    <div className="col-span-1 md:col-span-1 space-y-4">
+                        <h2 className="text-xl font-bold tracking-tight">
                             SKILLBRIDGE
                         </h2>
-                        <p className="text-sm text-muted-foreground max-w-sm">
-                            Empowering learners with expert guidance and
-                            personalized education.
+                        <p className="text-sm text-muted-foreground leading-relaxed">
+                            A professional platform connecting students with
+                            expert tutors for personalized, high-impact
+                            learning.
                         </p>
+                        <div className="flex items-center gap-4 text-muted-foreground">
+                            <a
+                                href="https://www.facebook.com/jahedulislam.jishan.9"
+                                target="_blank"
+                                className="hover:text-primary transition-colors"
+                            >
+                                <FaFacebook size={20} />
+                            </a>
+                            <a
+                                href="https://wa.me/01831303692"
+                                target="_blank"
+                                className="hover:text-primary transition-colors"
+                            >
+                                <FaWhatsapp size={20} />
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/jahedulislamdev/"
+                                target="_blank"
+                                className="hover:text-primary transition-colors"
+                            >
+                                <FaLinkedin size={20} />
+                            </a>
+                        </div>
                     </div>
 
-                    {/* Navigation */}
-                    <div className="flex flex-wrap gap-6 text-sm text-muted-foreground">
-                        <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            booking policy
-                        </Link>
-                        <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            Refund policy
-                        </Link>
-                        <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            privacy policy
-                        </Link>
-                        <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
-                        >
-                            Contact
-                        </Link>
+                    {/* Column 2: Quick Links */}
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider">
+                            Platform
+                        </h3>
+                        <nav className="flex flex-col gap-2">
+                            <Link
+                                href="/tutors"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Find a Tutor
+                            </Link>
+                            <Link
+                                href="/about"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                How it Works
+                            </Link>
+                            <Link
+                                href="/contact"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Support Center
+                            </Link>
+                        </nav>
                     </div>
 
-                    {/* Socials */}
-                    <div className="flex items-center gap-4 text-muted-foreground">
+                    {/* Column 3: Legal */}
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider">
+                            Legal
+                        </h3>
+                        <nav className="flex flex-col gap-2">
+                            <Link
+                                href="/privacy"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Privacy Policy
+                            </Link>
+                            <Link
+                                href="/terms"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Terms of Service
+                            </Link>
+                            <Link
+                                href="/refund"
+                                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                            >
+                                Refund Policy
+                            </Link>
+                        </nav>
+                    </div>
+
+                    {/* Column 4: Status/Contact */}
+                    <div className="space-y-4">
+                        <h3 className="text-sm font-semibold uppercase tracking-wider">
+                            System Status
+                        </h3>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <span className="flex h-2 w-2 rounded-full bg-green-500" />
+                            <span>Systems Operational</span>
+                        </div>
                         <Link
-                            href="#"
-                            className="hover:text-foreground transition-colors"
+                            href="mailto:support@skillbridge.com"
+                            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
                         >
-                            <FaFacebook size={23} />
-                        </Link>
-                        <Link
-                            href=""
-                            className="hover:text-foreground transition-colors"
-                        >
-                            <FaWhatsapp size={24} />
+                            <FaEnvelope />
+                            <span>support@skillbridge.com</span>
                         </Link>
                     </div>
                 </div>
 
-                {/* BOTTOM */}
-                <div className="mt-10 flex flex-col gap-4 border-t pt-6 text-xs text-muted-foreground md:flex-row md:items-center md:justify-between">
-                    {/* Copyright */}
-                    <p>
-                        © {new Date().getFullYear()} SKILLBRIDGE. All rights
-                        reserved.
-                    </p>
+                {/* Bottom Bar */}
+                <div className="mt-12 border-t pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[13px] text-muted-foreground">
+                    <p>© {currentYear} SKILLBRIDGE. All rights reserved.</p>
 
-                    {/* Developer + Status */}
-                    <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex items-center gap-1">
-                            <span>Developed by</span>
-                            <Link
-                                href="https://jahedulislam.dev"
-                                target="_blank"
-                                className="font-medium text-foreground hover:underline underline-offset-4"
-                            >
-                                jahedulislam.dev
-                            </Link>
-                        </div>
-
-                        <div className="hidden sm:block h-4 w-px bg-border" />
-
-                        <div className="flex items-center gap-2">
-                            <span className="relative flex h-2 w-2">
-                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75" />
-                                <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
-                            </span>
-                            <span>All systems operational</span>
-                        </div>
+                    <div className="flex items-center gap-1">
+                        <span>Built by</span>
+                        <Link
+                            href="https://jahedulislam.dev"
+                            target="_blank"
+                            className="font-medium text-foreground hover:underline underline-offset-4"
+                        >
+                            jahedulislam.dev
+                        </Link>
                     </div>
                 </div>
             </div>

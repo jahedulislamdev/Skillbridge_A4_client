@@ -6,13 +6,13 @@ export const proxy = async (request: NextRequest) => {
     const pathname = request.nextUrl.pathname;
     const { data } = await userService.getSession();
     //  console.log(data.user.role);
-    console.log(data);
+    // console.log(data);
 
     if (!data) {
         return NextResponse.redirect(new URL("/login", request.url));
     }
     const userRole = data.user.role;
-    console.log(userRole);
+    // console.log(userRole);
 
     if (pathname.startsWith("/admin-dashboard") && userRole !== Roles.admin) {
         return NextResponse.redirect(new URL("/", request.url));
