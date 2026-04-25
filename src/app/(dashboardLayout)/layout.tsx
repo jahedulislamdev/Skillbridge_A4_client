@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { ModeToggle } from "@/components/layout/Modetoggle";
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -13,6 +14,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import { Roles } from "@/constants/role";
 import { userService } from "@/service/user.service";
 import React from "react";
@@ -41,13 +43,14 @@ export default async function Page({
         <SidebarProvider>
             <AppSidebar user={data?.user} />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b">
+                <header className="flex pr-5 h-16 shrink-0 items-center justify-between gap-2 bg-card border-b sticky top-0 z-20">
                     <div className="flex items-center gap-2 px-3">
                         <SidebarTrigger />
                         <Separator
                             orientation="vertical"
                             className="mr-2 data-vertical:h-4 data-vertical:self-auto"
                         />
+
                         <Breadcrumb>
                             <BreadcrumbList>
                                 <BreadcrumbItem className="hidden md:block">
@@ -64,11 +67,13 @@ export default async function Page({
                             </BreadcrumbList>
                         </Breadcrumb>
                     </div>
+                    <ModeToggle />
                 </header>
                 <div className="flex flex-1 flex-col gap-4 p-4">
                     {currentView}
                 </div>
             </SidebarInset>
+            <Toaster position="top-right" richColors />
         </SidebarProvider>
     );
 }

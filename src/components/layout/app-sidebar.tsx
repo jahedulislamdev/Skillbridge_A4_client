@@ -18,6 +18,7 @@ import { tutorRoutes } from "@/routes/tutorRoutes";
 import { userRoutes } from "@/routes/userRoutes";
 import { Route } from "@/types/routesType";
 import { Roles } from "@/constants/role";
+import Link from "next/link";
 
 export function AppSidebar({
     user,
@@ -73,9 +74,9 @@ export function AppSidebar({
                                                     asChild
                                                     // isActive={item.isActive}
                                                 >
-                                                    <a href={item.url}>
+                                                    <Link href={item.url}>
                                                         {item.title}
-                                                    </a>
+                                                    </Link>
                                                 </SidebarMenuSubButton>
                                             </SidebarMenuSubItem>
                                         ))}
