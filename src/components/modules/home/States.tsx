@@ -1,29 +1,32 @@
-import { Users, FileText, Video, Box } from "lucide-react";
+import { Users, Video, Box, Book } from "lucide-react";
 
-const StatsSection = ({ stats }) => {
+const StatsSection = ({ stats }: any) => {
+    // console.log(stats);
+
+    const { slots, subjects, users } = stats.data;
     // Default data structure based on your image
     const statItems = [
         {
             label: "Registered Tutors",
-            value: stats?.tutors || "252,600",
+            value: users?.tutors || 0,
             icon: Users,
             color: "text-blue-500",
         },
         {
-            label: "Total Applications",
-            value: stats?.applications || "636,212",
-            icon: FileText,
+            label: "Total Subjects",
+            value: subjects?.total || 0,
+            icon: Book,
             color: "text-emerald-500",
         },
         {
             label: "Live Tuition Jobs",
-            value: stats?.jobs || "902",
+            value: slots?.available || 0,
             icon: Video,
             color: "text-orange-500",
         },
         {
             label: "Total Stakeholders",
-            value: stats?.stakeholders || "378,850",
+            value: users?.total || 0,
             icon: Box,
             color: "text-purple-500",
         },
