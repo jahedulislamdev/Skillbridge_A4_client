@@ -3,7 +3,7 @@ import ProfilePage from "@/app/(dashboardLayout)/@user/user-dashboard/profile/pa
 const TutorProfile = () => {
     return (
         <div>
-            <ProfilePage /> //* use profile can use anywhere
+            <ProfilePage />
         </div>
     );
 };

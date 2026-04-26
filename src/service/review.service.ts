@@ -19,4 +19,17 @@ export const reviewService = {
             return errorHandler(err);
         }
     },
+    getReviewsByTutorId: async (tutorId: string) => {
+        try {
+            const res = await fetch(`${api_url}/reviews/tutor/${tutorId}`);
+            const data = await res.json();
+            if (!data.success) {
+                return { data: null, err: data.message };
+            }
+
+            return { data: data.data, error: null };
+        } catch (err) {
+            return errorHandler(err);
+        }
+    },
 };
