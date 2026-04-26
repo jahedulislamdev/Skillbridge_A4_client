@@ -4,6 +4,10 @@ export const tutorRoutes = [
         url: "/",
         items: [
             {
+                title: "Profile",
+                url: "/tutor-dashboard/profile",
+            },
+            {
                 title: "Slot Management",
                 url: "/tutor-dashboard/slots",
             },

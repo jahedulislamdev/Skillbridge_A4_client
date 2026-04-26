@@ -52,4 +52,16 @@ export const userService = {
             errorHandler(err);
         }
     },
+    getUserById: async (userId: string) => {
+        try {
+            const res = await fetch(`${api_url}/users/${userId}`);
+            const data = await res.json();
+            if (!data.success) {
+                return { data: null, error: data.message };
+            }
+            return { data: data.data, error: null };
+        } catch (err) {
+            errorHandler(err);
+        }
+    },
 };
