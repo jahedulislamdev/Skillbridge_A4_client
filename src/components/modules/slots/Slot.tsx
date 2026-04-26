@@ -275,7 +275,7 @@ export default function SlotsPage({ data }: { data: Slot[] }) {
                                                 </Button>
                                             </DialogTrigger>
 
-                                            <DialogContent className="sm:max-w-[425px]">
+                                            <DialogContent className="sm:max-w-106">
                                                 <DialogHeader>
                                                     <DialogTitle>
                                                         Confirm Booking

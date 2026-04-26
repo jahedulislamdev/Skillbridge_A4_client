@@ -36,7 +36,7 @@ const Review = async () => {
                         <ReviewCard key={review.id} review={review} />
                     ))
                 ) : (
-                    <div className="flex min-h-[200px] flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
+                    <div className="flex min-h-50 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
                         <p className="text-muted-foreground">
                             No reviews received yet.
                         </p>
