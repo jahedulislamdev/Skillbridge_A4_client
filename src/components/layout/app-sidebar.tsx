@@ -1,4 +1,5 @@
 "use client";
+
 import * as React from "react";
 import {
     Sidebar,
@@ -19,7 +20,14 @@ import { userRoutes } from "@/routes/userRoutes";
 import { Route } from "@/types/routesType";
 import { Roles } from "@/constants/role";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
+const logo = {
+    url: "/",
+    src: "https://i.postimg.cc/xT9kq48w/logo-removebg.png",
+    alt: "logo",
+    title: "skillbridge",
+};
 export function AppSidebar({
     user,
     ...props
@@ -45,6 +53,7 @@ export function AppSidebar({
             break;
     }
     // console.log("end :", routes);
+    const pathname = usePathname();
 
     return (
         <Sidebar {...props}>
@@ -60,6 +69,21 @@ export function AppSidebar({
             </SidebarHeader>
             <SidebarContent>
                 <SidebarGroup>
+                    <div className="flex items-center pb-5 px-5 sticky top-0 z-20 bg-card">
+                        <Link
+                            href={logo.url}
+                            className="flex items-center gap-2 transition-opacity hover:opacity-90"
+                        >
+                            <img
+                                src={logo.src}
+                                className="h-9 w-auto dark:invert"
+                                alt={logo.alt}
+                            />
+                            <span className="hidden font-bold uppercase tracking-tight sm:inline-block">
+                                {logo.title}
+                            </span>
+                        </Link>
+                    </div>
                     <SidebarMenu>
                         {routes.map((item) => (
                             <SidebarMenuItem key={item.title}>
@@ -72,9 +96,13 @@ export function AppSidebar({
                                             >
                                                 <SidebarMenuSubButton
                                                     asChild
-                                                    // isActive={item.isActive}
+                                                    isActive={
+                                                        pathname === item.url
+                                                    }
                                                 >
-                                                    <Link href={item.url}>
+                                                    <Link
+                                                        href={item.url || "#"}
+                                                    >
                                                         {item.title}
                                                     </Link>
                                                 </SidebarMenuSubButton>

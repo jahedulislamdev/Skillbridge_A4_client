@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
+
 const UserDashboard = () => {
-    return <div>user dashboard</div>;
+    return redirect("/user-dashboard/profile");
 };
 
 export default UserDashboard;
