@@ -5,8 +5,6 @@ import { Separator } from "@/components/ui/separator";
 import { PaginationController } from "@/components/layout/Pagination";
 import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
 import { StatPill } from "@/components/modules/tutorHub/StatPills";
-import TutorSearch from "@/components/modules/tutorHub/TutorSearch";
-import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
 
 import {
     Sheet,
@@ -16,6 +14,8 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import SearchBox from "@/components/modules/tutorHub/Search";
+import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
 
 export default async function TutorHub({
     searchParams,
@@ -80,7 +80,7 @@ export default async function TutorHub({
                 {/* ── Search & Mobile Filter Trigger ── */}
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
                     <div className="w-full sm:flex-1">
-                        <TutorSearch />
+                        <SearchBox placeholder="Search by name or subject…" />
                     </div>
 
                     <div className="md:hidden w-full sm:w-auto">

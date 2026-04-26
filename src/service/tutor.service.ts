@@ -3,7 +3,7 @@ import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
 
 const app_url = env.API_URL;
-interface ServiceOptions {
+export interface ServiceOptions {
     cache?: RequestCache;
     revalidate?: number;
 }
@@ -34,7 +34,7 @@ export const tutorService = {
                     }
                 });
             }
-            console.log(url.toString());
+            // console.log(url.toString());
             const config: RequestInit = {};
             if (options?.cache) {
                 config.cache = options.cache;

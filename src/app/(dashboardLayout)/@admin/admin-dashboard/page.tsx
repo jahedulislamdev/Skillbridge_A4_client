@@ -1,5 +1,7 @@
+import { redirect } from "next/navigation";
+
 const AdminDashboard = () => {
-    return <div>Admin dashboard</div>;
+    return redirect("/admin-dashboard/analytics");
 };
 
 export default AdminDashboard;

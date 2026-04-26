@@ -1,12 +1,19 @@
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
+import { ServiceOptions } from "./tutor.service";
+import { object } from "zod";
 const auth_url = env.AUTh_URL;
 const api_url = env.API_URL;
 
 export interface UserProps {
     name: string;
     image: string;
+}
+export interface GetParams {
+    search: string;
+    limit: string;
+    page: string;
 }
 
 export const userService = {
@@ -58,6 +65,38 @@ export const userService = {
             const data = await res.json();
             if (!data.success) {
                 return { data: null, error: data.message };
+            }
+            return { data: data.data, error: null };
+        } catch (err) {
+            errorHandler(err);
+        }
+    },
+    getUsers: async (params?: GetParams, options?: ServiceOptions) => {
+        try {
+            const cookieStore = await cookies();
+            const url = new URL(`${api_url}/users`);
+            if (params) {
+                Object.entries(params).forEach(([keyof, value]) => {
+                    if (value !== undefined && value !== null && value !== "") {
+                        url.searchParams.append(keyof, value);
+                    }
+                });
+            }
+            const config: RequestInit = {};
+            if (options?.cache) {
+                config.cache = options.cache;
+            }
+            if (options?.revalidate) {
+                config.next = { revalidate: options.revalidate };
+            }
+            config.headers = {
+                Cookie: cookieStore.toString(),
+            };
+
+            const res = await fetch(url.toString(), config);
+            const data = await res.json();
+            if (!data.success) {
+                return { data: [], error: data.message };
             }
             return { data: data.data, error: null };
         } catch (err) {

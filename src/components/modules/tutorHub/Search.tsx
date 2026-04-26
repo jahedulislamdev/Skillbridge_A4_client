@@ -5,7 +5,7 @@ import { Search } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-const TutorSearch = () => {
+const SearchBox = ({ placeholder }: { placeholder: string }) => {
     const searchParams = useSearchParams();
     const [value, setValue] = useState(searchParams.get("search") || "");
     //  console.log(searchParams.get("search"));
@@ -35,7 +35,7 @@ const TutorSearch = () => {
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     name="query"
-                    placeholder="Search by name or subject…"
+                    placeholder={placeholder}
                     className="pl-10 h-10 rounded-xl bg-card"
                 />
             </form>
@@ -43,4 +43,4 @@ const TutorSearch = () => {
     );
 };
 
-export default TutorSearch;
+export default SearchBox;
