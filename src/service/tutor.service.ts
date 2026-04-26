@@ -59,7 +59,7 @@ export const tutorService = {
             const res = await fetch(`${app_url}/tutors/${id}`);
             const data = await res.json();
             if (!data.success) {
-                return { data: null, err: "something went wrong!" };
+                return { data: null, err: data.message };
             }
             return { data: data, error: null };
         } catch (err) {

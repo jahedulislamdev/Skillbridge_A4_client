@@ -9,7 +9,7 @@ export const slotService = {
             const res = await fetch(`${api_url}/slots`);
             const data = await res.json();
             if (!data.success) {
-                return { data: null, err: "something went wrong!" };
+                return { data: null, err: data.message };
             }
             // console.log(data);
 

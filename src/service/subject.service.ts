@@ -8,7 +8,7 @@ export const subjectService = {
             const res = await fetch(`${api_url}/subjects`);
             const data = await res.json();
             if (!data.success) {
-                return { data: null, error: "something went wrong" };
+                return { data: null, error: data.message };
             }
             return { data: data.data, error: null };
         } catch (err) {
