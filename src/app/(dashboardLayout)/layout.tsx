@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { DynamicBreadcrumb } from "@/components/layout/DynamicBreadcrumb";
 import { ModeToggle } from "@/components/layout/Modetoggle";
 import {
     Breadcrumb,
@@ -51,7 +52,7 @@ export default async function Page({
                             className="mr-2 data-vertical:h-4 data-vertical:self-auto"
                         />
 
-                        <Breadcrumb>
+                        {/* <Breadcrumb>
                             <BreadcrumbList>
                                 <BreadcrumbItem className="hidden md:block">
                                     <BreadcrumbLink href="#">
@@ -65,7 +66,8 @@ export default async function Page({
                                     </BreadcrumbPage>
                                 </BreadcrumbItem>
                             </BreadcrumbList>
-                        </Breadcrumb>
+                        </Breadcrumb> */}
+                        <DynamicBreadcrumb />
                     </div>
                     <ModeToggle />
                 </header>
