@@ -56,7 +56,9 @@ export const tutorService = {
     },
     getTutorById: async (id: string) => {
         try {
-            const res = await fetch(`${app_url}/tutors/${id}`);
+            const res = await fetch(`${app_url}/tutors/${id}`, {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, err: data.message };

@@ -23,7 +23,7 @@ const UserManagement = async ({
     const { limit, page, search } = await searchParams;
     const response = await userService.getUsers(
         { limit, page, search },
-        { revalidate: 60 },
+        { cache: "no-store" },
     );
     // console.log(response);
 

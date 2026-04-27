@@ -5,7 +5,9 @@ const app_url = env.API_URL;
 export const statsService = {
     getStates: async () => {
         try {
-            const res = await fetch(`${app_url}/dashboard/stats`);
+            const res = await fetch(`${app_url}/dashboard/stats`, {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, error: data.message };

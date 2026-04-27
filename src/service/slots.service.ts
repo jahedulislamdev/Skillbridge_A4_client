@@ -38,7 +38,9 @@ export const slotService = {
     },
     getSlots: async () => {
         try {
-            const res = await fetch(`${api_url}/slots`);
+            const res = await fetch(`${api_url}/slots`, {
+                next: { revalidate: 60 },
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, err: data.message };
@@ -52,7 +54,9 @@ export const slotService = {
     },
     getSlotsByTutorId: async (tutorId: string) => {
         try {
-            const res = await fetch(`${api_url}/slots/tutor/${tutorId}`);
+            const res = await fetch(`${api_url}/slots/tutor/${tutorId}`, {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, error: data.message };

@@ -6,7 +6,9 @@ const api_url = env.API_URL;
 export const reviewService = {
     getReviews: async () => {
         try {
-            const res = await fetch(`${api_url}/reviews`);
+            const res = await fetch(`${api_url}/reviews`, {
+                next: { revalidate: 60 },
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, err: data.message };
@@ -21,7 +23,9 @@ export const reviewService = {
     },
     getReviewsByTutorId: async (tutorId: string) => {
         try {
-            const res = await fetch(`${api_url}/reviews/tutor/${tutorId}`);
+            const res = await fetch(`${api_url}/reviews/tutor/${tutorId}`, {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, err: data.message };

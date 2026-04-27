@@ -57,7 +57,7 @@ export const subjectService = {
     getSubjects: async () => {
         try {
             const res = await fetch(`${api_url}/subjects`, {
-                next: { revalidate: 100 },
+                next: { revalidate: 60 },
             });
             const data = await res.json();
             if (!data.success) {

@@ -61,7 +61,9 @@ export const userService = {
     },
     getUserById: async (userId: string) => {
         try {
-            const res = await fetch(`${api_url}/users/${userId}`);
+            const res = await fetch(`${api_url}/users/${userId}`, {
+                cache: "no-store",
+            });
             const data = await res.json();
             if (!data.success) {
                 return { data: null, error: data.message };

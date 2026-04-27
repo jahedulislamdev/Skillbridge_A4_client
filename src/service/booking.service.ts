@@ -35,6 +35,7 @@ export const bookingService = {
                 headers: {
                     Cookie: cookieStore.toString(),
                 },
+                cache: "no-store",
             });
             const data = await res.json();
             if (!data.success) {

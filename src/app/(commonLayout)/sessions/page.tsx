@@ -4,7 +4,7 @@ import { slotService } from "@/service/slots.service";
 
 const Sessions = async () => {
     const { data } = await slotService.getSlots();
-    const slots = data.data || [];
+    const slots = data?.data || [];
     // console.log(slots);
 
     return (

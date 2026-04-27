@@ -22,7 +22,7 @@ const TutorDetails = async ({
 }) => {
     const { id } = await params;
     const { data } = await tutorService.getTutorById(id);
-    const tutor = data.data;
+    const tutor = data?.data;
 
     if (!tutor) {
         return (

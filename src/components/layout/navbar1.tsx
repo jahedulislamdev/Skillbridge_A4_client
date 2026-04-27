@@ -64,20 +64,7 @@ const Navbar = ({
         alt: "logo",
         title: "skillbridge",
     },
-    menu = [
-        {
-            title: "Sessions",
-            url: "/sessions",
-        },
-        {
-            title: "Tutor Hub",
-            url: "/tutors",
-        },
-        {
-            title: "Dashboard",
-            url: "/dashboard",
-        },
-    ],
+
     auth = {
         login: { title: "Login", url: "/login" },
         beTutor: { title: "Be a Tutor", url: "/tutor-registration" },
@@ -94,7 +81,28 @@ const Navbar = ({
         })();
     }, []);
     // console.log(session);
-
+    const menu = [
+        {
+            title: "Home",
+            url: "/",
+        },
+        {
+            title: "Sessions",
+            url: "/sessions",
+        },
+        {
+            title: "Tutor Hub",
+            url: "/tutors",
+        },
+        ...(session
+            ? [
+                  {
+                      title: "Dashboard",
+                      url: "/dashboard",
+                  },
+              ]
+            : []),
+    ];
     const handleLogout = async () => {
         await authClient.signOut({
             fetchOptions: {
