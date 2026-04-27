@@ -12,8 +12,8 @@ export const adminRoutes = [
                 url: "/admin-dashboard/users",
             },
             {
-                title: "Category Management",
-                url: "/admin-dashboard/category",
+                title: "Subject Management",
+                url: "/admin-dashboard/subjects",
             },
         ],
     },
