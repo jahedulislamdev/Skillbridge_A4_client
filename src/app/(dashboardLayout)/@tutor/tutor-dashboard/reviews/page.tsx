@@ -1,12 +1,6 @@
 import { reviewService } from "@/service/review.service";
 import { userService } from "@/service/user.service";
-import {
-    Card,
-    CardContent,
-    CardHeader,
-    CardTitle,
-    CardDescription,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { format } from "date-fns";
 

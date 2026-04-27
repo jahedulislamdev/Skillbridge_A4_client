@@ -31,6 +31,7 @@ export default async function TutorHub({
 }) {
     const { limit, page, rating, search, priceMin, priceMax } =
         await searchParams;
+
     const { data } = await tutorService.getTutors(
         {
             limit,

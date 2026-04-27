@@ -2,7 +2,7 @@ import { BookingCard } from "@/components/modules/booking/BookingCard";
 import { bookingService } from "@/service/booking.service";
 // Import the client component
 
-export default async function UserBookings() {
+export default async function UserBookingsSkelaton() {
     const response = await bookingService.getBooking();
     const bookings = response?.data || [];
 
