@@ -46,6 +46,24 @@ export const bookingService = {
             errorHandler(err);
         }
     },
+    getBookingByTutorId: async (tutorId: string) => {
+        try {
+            const cookieStore = await cookies();
+            const res = await fetch(`${app_url}/bookings/tutor/${tutorId}`, {
+                headers: {
+                    Cookie: cookieStore.toString(),
+                },
+            });
+            const data = await res.json();
+            if (!data.success) {
+                return { data: null, error: data.message };
+            }
+            return { data: data.data, error: null };
+        } catch (err) {
+            errorHandler(err);
+        }
+    },
+
     updateBooking: async (bookingId: string, updatedData: BookingProps) => {
         try {
             const cookieStore = await cookies();

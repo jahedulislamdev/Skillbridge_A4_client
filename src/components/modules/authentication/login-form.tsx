@@ -19,7 +19,7 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStore } from "@/store/auth.store";
+import { useAuthStore, userStore } from "@/store/auth.store";
 import { getUserSession } from "@/actions/user.actions";
 
 const formSchema = z.object({
@@ -33,7 +33,7 @@ export function LoginForm({
 }: React.ComponentProps<typeof Card>) {
     const router = useRouter();
 
-    const { setSession } = useAuthStore();
+    const { setUser } = userStore();
     const handleWithGoogle = async () => {
         await authClient.signIn.social({
             provider: "google",
@@ -67,10 +67,15 @@ export function LoginForm({
                     return;
                 }
                 const { data } = await getUserSession();
-                setSession(data?.session);
+                // setSession(data?.session);
+                setUser({
+                    userId: data?.user.id,
+                    name: data?.user.name,
+                    image: data?.user.image,
+                    role: data?.user.role,
+                });
                 toast.success("Welcome back!", { id: toastId });
                 form.reset();
-
                 router.push("/");
             } catch (err) {
                 toast.error("Something went wrong. Please try again later.", {

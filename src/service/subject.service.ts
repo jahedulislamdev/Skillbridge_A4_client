@@ -13,7 +13,7 @@ export const subjectService = {
                     "Content-Type": "application/json",
                     Cookie: cookieStore.toString(),
                 },
-                body: JSON.stringify(subject),
+                body: JSON.stringify({ name: subject }),
             });
             return await res.json();
         } catch (err) {
@@ -56,9 +56,7 @@ export const subjectService = {
     },
     getSubjects: async () => {
         try {
-            const res = await fetch(`${api_url}/subjects`, {
-                next: { revalidate: 60 },
-            });
+            const res = await fetch(`${api_url}/subjects`);
             const data = await res.json();
             if (!data.success) {
                 return { data: null, error: data.message };

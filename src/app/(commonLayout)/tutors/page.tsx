@@ -45,7 +45,7 @@ export default async function TutorHub({
     );
 
     const tutors: any[] = data?.data?.tutors ?? [];
-    console.log(tutors);
+    // console.log(tutors);
 
     const pagination = data?.data?.meta || {
         limit: 10,

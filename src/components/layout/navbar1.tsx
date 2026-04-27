@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { getUserSession } from "@/actions/user.actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/auth.store";
+import { useAuthStore, userStore } from "@/store/auth.store";
 
 interface MenuItem {
     title: string;
@@ -65,22 +65,10 @@ const Navbar = ({
         title: "skillbridge",
     },
 
-    auth = {
-        login: { title: "Login", url: "/login" },
-        beTutor: { title: "Be a Tutor", url: "/tutor-registration" },
-        signup: { title: "Register", url: "/register" },
-    },
     className,
 }: Navbar1Props) => {
     const router = useRouter();
-    const { session, setSession, clearSession } = useAuthStore();
-    useEffect(() => {
-        (async () => {
-            const { data } = await getUserSession();
-            setSession(data?.session);
-        })();
-    }, []);
-    // console.log(session);
+    const { userId, role, clearUser } = userStore();
     const menu = [
         {
             title: "Home",
@@ -94,7 +82,7 @@ const Navbar = ({
             title: "Tutor Hub",
             url: "/tutors",
         },
-        ...(session
+        ...(userId
             ? [
                   {
                       title: "Dashboard",
@@ -103,11 +91,16 @@ const Navbar = ({
               ]
             : []),
     ];
+    const auth = {
+        login: { title: "Login", url: "/login" },
+        signup: { title: "Register", url: "/register" },
+        beTutor: { title: "Be a Tutor", url: "/tutor-registration" },
+    };
     const handleLogout = async () => {
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
-                    clearSession();
+                    clearUser();
                     router.replace("/login");
                 },
             },
@@ -154,19 +147,21 @@ const Navbar = ({
                     {/* Column 3: Actions (Right) */}
                     <div className="hidden items-center justify-end gap-3 lg:flex">
                         <ModeToggle />
-                        {session ? (
+                        {userId ? (
                             <div className="flex items-center gap-2">
-                                <Button
-                                    asChild
-                                    variant="secondary"
-                                    className="bg-blue-200 hover:bg-blue-200  text-gray-900"
-                                    size="lg"
-                                >
-                                    <Link href={auth.beTutor.url}>
-                                        <GraduationCap className="w-5 h-5" />{" "}
-                                        {auth.beTutor.title}
-                                    </Link>
-                                </Button>
+                                {role === "USER" && (
+                                    <Button
+                                        asChild
+                                        variant="secondary"
+                                        className="bg-blue-200 hover:bg-blue-200  text-gray-900"
+                                        size="lg"
+                                    >
+                                        <Link href={auth.beTutor.url}>
+                                            <GraduationCap className="w-5 h-5" />{" "}
+                                            {auth.beTutor.title}
+                                        </Link>
+                                    </Button>
+                                )}
                                 <Button
                                     onClick={() => handleLogout()}
                                     variant="destructive"
@@ -236,19 +231,23 @@ const Navbar = ({
                                 </div>
 
                                 <div className="mt-auto border-t p-6 ">
-                                    {session ? (
+                                    {userId ? (
                                         <div className="flex flex-col gap-3">
-                                            <Button
-                                                asChild
-                                                variant="secondary"
-                                                className="bg-blue-500 hover:bg-blue-500"
-                                                size="lg"
-                                            >
-                                                <Link href={auth.beTutor.url}>
-                                                    <GraduationCap className="w-5 h-5" />{" "}
-                                                    {auth.beTutor.title}
-                                                </Link>
-                                            </Button>
+                                            {role === "USER" && (
+                                                <Button
+                                                    asChild
+                                                    variant="secondary"
+                                                    className="bg-blue-500 hover:bg-blue-500"
+                                                    size="lg"
+                                                >
+                                                    <Link
+                                                        href={auth.beTutor.url}
+                                                    >
+                                                        <GraduationCap className="w-5 h-5" />{" "}
+                                                        {auth.beTutor.title}
+                                                    </Link>
+                                                </Button>
+                                            )}
                                             <Button
                                                 onClick={() => handleLogout()}
                                                 variant="destructive"
