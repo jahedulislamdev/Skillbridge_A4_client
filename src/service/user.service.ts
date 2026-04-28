@@ -7,8 +7,11 @@ const auth_url = env.AUTh_URL;
 const api_url = env.API_URL;
 
 export interface UserProps {
-    name: string;
-    image: string;
+    name?: string;
+    image?: string;
+    role?: string;
+    emailVerified?: boolean;
+    isBanned?: boolean;
 }
 export interface GetParams {
     search: string;
@@ -50,11 +53,7 @@ export const userService = {
                 body: JSON.stringify(updatedData),
             });
 
-            const data = await res.json();
-            if (!data.success) {
-                return { data: null, error: data.message };
-            }
-            return { data, error: null };
+            return await res.json();
         } catch (err) {
             errorHandler(err);
         }

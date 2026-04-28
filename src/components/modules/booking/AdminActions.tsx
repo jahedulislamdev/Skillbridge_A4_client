@@ -41,7 +41,11 @@ interface AdminActionProps {
     meetingLink: string | null;
 }
 
-const AdminActions = ({ bookingId, status, meetingLink }: AdminActionProps) => {
+export default function AdminActionsBookings({
+    bookingId,
+    status,
+    meetingLink,
+}: AdminActionProps) {
     const [isPending, setIsPending] = useState(false);
     const [currentStatus, setCurrentStatus] = useState(status);
     const [link, setLink] = useState(meetingLink || "");
@@ -135,7 +139,7 @@ const AdminActions = ({ bookingId, status, meetingLink }: AdminActionProps) => {
                     <Button
                         onClick={handleUpdate}
                         disabled={isPending}
-                        className="min-w-25"
+                        className="min-w-25 ms-2"
                     >
                         {isPending ? (
                             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -148,6 +152,4 @@ const AdminActions = ({ bookingId, status, meetingLink }: AdminActionProps) => {
             </DialogContent>
         </Dialog>
     );
-};
-
-export default AdminActions;
+}

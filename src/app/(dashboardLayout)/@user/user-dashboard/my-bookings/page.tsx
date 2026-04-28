@@ -8,7 +8,7 @@ interface UserBookingsProps {
 export default async function UserBookings({
     hideHeader = false,
 }: UserBookingsProps) {
-    const response = await bookingService.getBooking();
+    const response = await bookingService.getBookings();
     const bookings = response?.data || [];
 
     return (

@@ -13,6 +13,7 @@ export default function UserProvider({ children, initialUser }) {
             name: initialUser.user.name,
             image: initialUser.user.image,
             role: initialUser.user.role,
+            email: initialUser.user.email,
         });
     }, [initialUser]);
     return <>{children}</>;

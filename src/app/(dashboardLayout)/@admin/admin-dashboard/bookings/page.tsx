@@ -9,12 +9,11 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Video } from "lucide-react";
+import { Video } from "lucide-react";
 import { StatusBadge } from "@/components/modules/booking/StatusBadge";
 import { Badge } from "@/components/ui/badge";
-import AdminActions from "@/components/modules/booking/AdminActions";
 import Link from "next/link";
+import AdminActionsBookings from "@/components/modules/booking/AdminActions";
 
 const Bookings = async () => {
     const res = await bookingService.getBookings();
@@ -121,7 +120,7 @@ const Bookings = async () => {
                                         )}
                                     </TableCell>
                                     <TableCell className="text-right">
-                                        <AdminActions
+                                        <AdminActionsBookings
                                             bookingId={booking.id}
                                             meetingLink={
                                                 booking.meetingLinkm || ""

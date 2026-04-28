@@ -16,17 +16,18 @@ const formSchema = z.object({
 });
 
 export default function ProfileForm({ user }: { user: any }) {
+    const { name, email, image, userId } = user;
     const form = useForm({
         defaultValues: {
-            name: user.name || "",
-            image: user.image || "",
+            name: name || "",
+            image: image || "",
         },
         validators: {
             onChange: formSchema,
         },
         onSubmit: async ({ value }) => {
             try {
-                const res = await updateUser(user.id, value);
+                const res = await updateUser(userId, value);
                 if (!res?.data.success) {
                     return toast.error(res?.error.message);
                 }
@@ -132,7 +133,7 @@ export default function ProfileForm({ user }: { user: any }) {
                             Email Address
                         </Label>
                         <Input
-                            value={user.email}
+                            value={email}
                             disabled
                             className="h-11 bg-muted/50 cursor-not-allowed opacity-80"
                         />

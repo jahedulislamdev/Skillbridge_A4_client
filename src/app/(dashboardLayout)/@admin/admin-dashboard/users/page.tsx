@@ -9,11 +9,11 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { MoreHorizontal, ShieldAlert, UserCheck, Mail } from "lucide-react";
+import { ShieldAlert, UserCheck, Mail } from "lucide-react";
 import { format } from "date-fns";
 import SearchBox from "@/components/modules/tutorHub/Search";
 import { PaginationController } from "@/components/layout/Pagination";
+import { AdminActionsUser } from "@/components/modules/user/AdminActions";
 
 const UserManagement = async ({
     searchParams,
@@ -127,13 +127,12 @@ const UserManagement = async ({
                                     )}
                                 </TableCell>
                                 <TableCell className="text-right">
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-8 w-8"
-                                    >
-                                        <MoreHorizontal className="h-4 w-4" />
-                                    </Button>
+                                    <AdminActionsUser
+                                        initialIsBanned={user.isBanned}
+                                        initialRole={user.role}
+                                        initialVerified={user.emailVerified}
+                                        userId={user.id}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}

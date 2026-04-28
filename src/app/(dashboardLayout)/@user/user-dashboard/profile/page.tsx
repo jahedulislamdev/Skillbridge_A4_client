@@ -7,10 +7,11 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { userStore } from "@/store/auth.store";
 
 export default async function ProfilePage() {
-    const { data } = await userService.getSession();
-    const user = data?.user;
+    const res = await userService.getSession();
+    const user = res.data?.user;
 
     if (!user) {
         return (
