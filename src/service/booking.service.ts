@@ -1,4 +1,3 @@
-import { BookingStatus } from "@/constants/bookingStatus";
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
@@ -6,7 +5,7 @@ import { cookies } from "next/headers";
 const app_url = env.API_URL;
 
 export interface BookingProps {
-    status: BookingStatus;
+    status: string;
     meetingLink?: string;
 }
 
@@ -27,7 +26,8 @@ export const bookingService = {
             errorHandler(err);
         }
     },
-    getBooking: async () => {
+
+    getBookings: async () => {
         try {
             const cookieStore = await cookies();
             const res = await fetch(`${app_url}/bookings`, {
@@ -35,7 +35,6 @@ export const bookingService = {
                 headers: {
                     Cookie: cookieStore.toString(),
                 },
-                cache: "no-store",
             });
             const data = await res.json();
             if (!data.success) {
@@ -46,6 +45,7 @@ export const bookingService = {
             errorHandler(err);
         }
     },
+
     getBookingByTutorId: async (tutorId: string) => {
         try {
             const cookieStore = await cookies();

@@ -1,14 +1,6 @@
-import { AppSidebar } from "@/components/layout/app-sidebar";
 import { DynamicBreadcrumb } from "@/components/layout/DynamicBreadcrumb";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import { ModeToggle } from "@/components/layout/Modetoggle";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
 import {
     SidebarInset,

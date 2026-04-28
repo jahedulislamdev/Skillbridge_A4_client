@@ -15,6 +15,10 @@ export const adminRoutes = [
                 title: "Subject Management",
                 url: "/admin-dashboard/subjects",
             },
+            {
+                title: "Booking Management",
+                url: "/admin-dashboard/bookings",
+            },
         ],
     },
 ];

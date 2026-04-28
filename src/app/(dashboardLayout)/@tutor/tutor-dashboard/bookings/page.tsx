@@ -50,6 +50,8 @@ const TutorBookings = async () => {
                                     <BookingCard
                                         key={booking.id}
                                         booking={booking}
+                                        role="tutor"
+                                        showCancel
                                     />
                                 ))
                             ) : (

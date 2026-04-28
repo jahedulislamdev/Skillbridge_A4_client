@@ -15,26 +15,37 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Clock, CreditCard, XCircle, Loader2 } from "lucide-react";
+import { Clock, CreditCard, XCircle, Loader2, Link } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { BookingStatus } from "@/constants/bookingStatus";
-import { updateBooking } from "@/actions/booking.actions";
 
-export function BookingCard({ booking }: { booking: any }) {
+type BookingCardProps = {
+    booking: any;
+    role?: "student" | "tutor";
+    showCancel?: boolean;
+    onCancel?: (id: string) => Promise<void>;
+    onStatusChange?: (id: string, status: string) => Promise<void>;
+    onAddMeetingLink?: (id: string) => void;
+};
+
+export function BookingCard({
+    booking,
+    role = "student",
+    showCancel = false,
+    onCancel,
+    onStatusChange,
+    onAddMeetingLink,
+}: BookingCardProps) {
     const [isPending, setIsPending] = useState(false);
     const router = useRouter();
 
     const handleCancel = async () => {
+        if (!onCancel) return;
+
         setIsPending(true);
         try {
-            const res = await updateBooking(booking.id, {
-                status: BookingStatus.CANCELLED,
-            });
-            if (!res.success) {
-                return toast.error(res?.data.message);
-            }
+            await onCancel(booking.id);
             toast.success("Booking cancelled successfully");
             router.refresh();
         } catch (error) {
@@ -44,8 +55,23 @@ export function BookingCard({ booking }: { booking: any }) {
         }
     };
 
+    const handleStatus = async (status: string) => {
+        if (!onStatusChange) return;
+
+        setIsPending(true);
+        try {
+            await onStatusChange(booking.id, status);
+            toast.success(`Booking ${status}`);
+            router.refresh();
+        } catch (error) {
+            toast.error("Failed to update status");
+        } finally {
+            setIsPending(false);
+        }
+    };
+
     const date = new Date(booking.scheduledAt);
-    const isCancelled = booking.status === BookingStatus.CANCELLED;
+    const isCancelled = booking.status === "CANCELLED";
 
     const statusStyles: Record<string, string> = {
         PENDING: "bg-yellow-500/10 text-yellow-600 border-yellow-200",
@@ -55,13 +81,15 @@ export function BookingCard({ booking }: { booking: any }) {
 
     return (
         <Card
-            className={`overflow-hidden transition-all ${isCancelled ? "opacity-60 grayscale-[0.5]" : "hover:shadow-md"}`}
+            className={`overflow-hidden transition-all ${
+                isCancelled ? "opacity-60 grayscale-[0.5]" : "hover:shadow-md"
+            }`}
         >
             <CardContent className="p-0">
                 <div className="flex flex-col sm:flex-row">
-                    {/* Date Block */}
+                    {/* Date */}
                     <div className="flex flex-col items-center justify-center bg-muted/30 p-6 sm:w-32 border-b sm:border-b-0 sm:border-r">
-                        <span className="text-xs font-medium text-muted-foreground uppercase">
+                        <span className="text-xs text-muted-foreground uppercase">
                             {format(date, "MMM")}
                         </span>
                         <span className="text-3xl font-bold">
@@ -69,9 +97,9 @@ export function BookingCard({ booking }: { booking: any }) {
                         </span>
                     </div>
 
-                    {/* Details */}
+                    {/* Content */}
                     <div className="flex-1 p-6">
-                        <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+                        <div className="flex flex-col gap-4 sm:flex-row sm:justify-between">
                             <div className="space-y-3">
                                 <div className="flex items-center gap-2">
                                     <Badge
@@ -80,16 +108,18 @@ export function BookingCard({ booking }: { booking: any }) {
                                     >
                                         {booking.status}
                                     </Badge>
+
                                     <span className="text-xs text-muted-foreground flex items-center gap-1">
                                         <Clock className="h-3 w-3" />
                                         {format(date, "p")}
                                     </span>
                                 </div>
 
-                                <div className="space-y-1">
+                                <div>
                                     <h3 className="font-semibold text-lg">
                                         Tutoring Session
                                     </h3>
+
                                     <div className="flex items-center gap-4 text-sm text-muted-foreground">
                                         <div className="flex items-center gap-1">
                                             <CreditCard className="h-4 w-4" />$
@@ -97,51 +127,108 @@ export function BookingCard({ booking }: { booking: any }) {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* Meeting Link */}
+                                {booking.meetingLink && (
+                                    <a
+                                        href={booking.meetingLink}
+                                        target="_blank"
+                                        className="flex items-center gap-1 text-blue-600 text-sm underline"
+                                    >
+                                        <Link className="h-4 w-4" />
+                                        Join Meeting
+                                    </a>
+                                )}
                             </div>
 
-                            {/* Cancel Button - Only show if not already cancelled */}
-                            {!isCancelled && (
-                                <AlertDialog>
-                                    <AlertDialogTrigger asChild>
-                                        <Button
-                                            variant="ghost"
-                                            size="sm"
-                                            className="text-destructive hover:text-destructive hover:bg-destructive/10"
-                                        >
-                                            <XCircle className="mr-2 h-4 w-4" />
-                                            Cancel
-                                        </Button>
-                                    </AlertDialogTrigger>
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle>
-                                                Are you absolutely sure?
-                                            </AlertDialogTitle>
-                                            <AlertDialogDescription>
-                                                This will cancel your session
-                                                scheduled for{" "}
-                                                {format(date, "PPP")}. This
-                                                action cannot be undone.
-                                            </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter>
-                                            <AlertDialogCancel>
-                                                Go Back
-                                            </AlertDialogCancel>
-                                            <AlertDialogAction
-                                                onClick={handleCancel}
-                                                className="bg-red-800 text-white"
+                            {/* ACTIONS */}
+                            <div className="flex flex-col gap-2">
+                                {/* Student Cancel */}
+                                {showCancel && !isCancelled && (
+                                    <AlertDialog>
+                                        <AlertDialogTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                size="sm"
+                                                className="text-destructive"
                                             >
-                                                {isPending ? (
-                                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                                ) : (
-                                                    "Confirm Cancellation"
-                                                )}
-                                            </AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </AlertDialog>
-                            )}
+                                                <XCircle className="mr-2 h-4 w-4" />
+                                                Cancel
+                                            </Button>
+                                        </AlertDialogTrigger>
+
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>
+                                                    Are you sure?
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Cancel session on{" "}
+                                                    {format(date, "PPP")}
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+
+                                            <AlertDialogFooter>
+                                                <AlertDialogCancel>
+                                                    Back
+                                                </AlertDialogCancel>
+
+                                                <AlertDialogAction
+                                                    onClick={handleCancel}
+                                                >
+                                                    {isPending ? (
+                                                        <Loader2 className="animate-spin h-4 w-4" />
+                                                    ) : (
+                                                        "Confirm"
+                                                    )}
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
+                                )}
+
+                                {/* Tutor Actions */}
+                                {role === "tutor" && (
+                                    <>
+                                        {booking.status === "PENDING" && (
+                                            <>
+                                                <Button
+                                                    size="sm"
+                                                    onClick={() =>
+                                                        handleStatus(
+                                                            "CONFIRMED",
+                                                        )
+                                                    }
+                                                >
+                                                    Confirm
+                                                </Button>
+
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    onClick={() =>
+                                                        handleStatus(
+                                                            "CANCELLED",
+                                                        )
+                                                    }
+                                                >
+                                                    Reject
+                                                </Button>
+                                            </>
+                                        )}
+
+                                        <Button
+                                            size="sm"
+                                            variant="secondary"
+                                            onClick={() =>
+                                                onAddMeetingLink?.(booking.id)
+                                            }
+                                        >
+                                            Add Meeting Link
+                                        </Button>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
