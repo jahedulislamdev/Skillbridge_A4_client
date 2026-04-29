@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import { toast } from "sonner"; // or your preferred toast library
-import {
-    MoreHorizontal,
-    Link as LinkIcon,
-    Save,
-    Loader2,
-    Edit,
-} from "lucide-react";
+import { Link as LinkIcon, Save, Loader2, Edit } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {

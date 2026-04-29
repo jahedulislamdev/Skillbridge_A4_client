@@ -29,7 +29,11 @@ export default async function UserBookings({
             <div className="grid gap-6">
                 {bookings.length > 0 ? (
                     bookings.map((booking: any) => (
-                        <BookingCard key={booking.id} booking={booking} />
+                        <BookingCard
+                            key={booking.id}
+                            booking={booking}
+                            showCancel
+                        />
                     ))
                 ) : (
                     <div className="flex flex-col items-center justify-center py-20 border-2 border-dashed rounded-xl bg-muted/20">

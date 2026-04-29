@@ -1,3 +1,4 @@
+import { BookingStatus } from "@/constants/bookingStatus";
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
@@ -31,10 +32,10 @@ export const bookingService = {
         try {
             const cookieStore = await cookies();
             const res = await fetch(`${app_url}/bookings`, {
-                next: { revalidate: 60 },
                 headers: {
                     Cookie: cookieStore.toString(),
                 },
+                cache: "no-store",
             });
             const data = await res.json();
             if (!data.success) {

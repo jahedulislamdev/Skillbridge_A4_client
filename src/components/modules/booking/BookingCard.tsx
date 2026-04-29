@@ -19,12 +19,12 @@ import { Clock, CreditCard, XCircle, Loader2, Link } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { updateBooking } from "@/actions/booking.actions";
 
 type BookingCardProps = {
     booking: any;
     role?: "student" | "tutor";
     showCancel?: boolean;
-    onCancel?: (id: string) => Promise<void>;
     onStatusChange?: (id: string, status: string) => Promise<void>;
     onAddMeetingLink?: (id: string) => void;
 };
@@ -33,19 +33,24 @@ export function BookingCard({
     booking,
     role = "student",
     showCancel = false,
-    onCancel,
     onStatusChange,
     onAddMeetingLink,
 }: BookingCardProps) {
     const [isPending, setIsPending] = useState(false);
+    const [status, setStatus] = useState(booking.status);
     const router = useRouter();
 
+    //* we can't pass event hander in server component that's why I write it maually here
     const handleCancel = async () => {
-        if (!onCancel) return;
-
         setIsPending(true);
         try {
-            await onCancel(booking.id);
+            const res = await updateBooking(booking.id, {
+                status: "CANCELLED",
+            });
+            if (!res.success) {
+                return toast.error(res.message);
+            }
+            setStatus("CANCELLED");
             toast.success("Booking cancelled successfully");
             router.refresh();
         } catch (error) {
@@ -71,7 +76,7 @@ export function BookingCard({
     };
 
     const date = new Date(booking.scheduledAt);
-    const isCancelled = booking.status === "CANCELLED";
+    const isCancelled = status === "CANCELLED";
 
     const statusStyles: Record<string, string> = {
         PENDING: "bg-yellow-500/10 text-yellow-600 border-yellow-200",
@@ -104,9 +109,9 @@ export function BookingCard({
                                 <div className="flex items-center gap-2">
                                     <Badge
                                         variant="outline"
-                                        className={statusStyles[booking.status]}
+                                        className={statusStyles[status]}
                                     >
-                                        {booking.status}
+                                        {status}
                                     </Badge>
 
                                     <span className="text-xs text-muted-foreground flex items-center gap-1">
@@ -190,7 +195,7 @@ export function BookingCard({
                                 {/* Tutor Actions */}
                                 {role === "tutor" && (
                                     <>
-                                        {booking.status === "PENDING" && (
+                                        {status === "PENDING" && (
                                             <>
                                                 <Button
                                                     size="sm"
