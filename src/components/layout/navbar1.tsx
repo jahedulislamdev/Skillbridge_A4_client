@@ -21,7 +21,7 @@ import { useEffect } from "react";
 import { getUserSession } from "@/actions/user.actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { useAuthStore, userStore } from "@/store/auth.store";
+import { userStore } from "@/store/auth.store";
 
 interface MenuItem {
     title: string;

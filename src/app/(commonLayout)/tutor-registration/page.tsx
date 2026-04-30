@@ -14,6 +14,7 @@ const TutorRegistar = async () => {
     return (
         <div>
             <TutorRegisterForm user={user} subjects={subjects?.data} />
+            {/* <TutorForm /> */}
         </div>
     );
 };

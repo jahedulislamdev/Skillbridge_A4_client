@@ -12,6 +12,10 @@ export const adminRoutes = [
                 url: "/admin-dashboard/users",
             },
             {
+                title: "Tutor Management",
+                url: "/admin-dashboard/tutors",
+            },
+            {
                 title: "Subject Management",
                 url: "/admin-dashboard/subjects",
             },

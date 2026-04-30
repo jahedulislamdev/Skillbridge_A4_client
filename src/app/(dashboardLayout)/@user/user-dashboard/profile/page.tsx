@@ -1,17 +1,18 @@
 import { userService } from "@/service/user.service";
 import { Separator } from "@/components/ui/separator";
-import ProfileForm from "@/components/modules/user/ProfileForm";
 import {
     Card,
     CardDescription,
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import { userStore } from "@/store/auth.store";
+import ProfileForm from "@/components/modules/user/UserProfileForm";
+import UserProfileForm from "@/components/modules/user/UserProfileForm";
 
-export default async function ProfilePage() {
+export default async function UserProfilePage() {
     const res = await userService.getSession();
     const user = res.data?.user;
+    // console.log(user);
 
     if (!user) {
         return (
@@ -39,7 +40,7 @@ export default async function ProfilePage() {
                 <div className="px-4 sm:px-6">
                     <Separator className="mb-6" />
                     <div className="pb-6">
-                        <ProfileForm user={user} />
+                        <UserProfileForm user={user} />
                     </div>
                 </div>
             </Card>

@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,7 +12,6 @@ import {
     Check,
     Clock,
     ShieldCheck,
-    RotateCcw,
     AlertCircle,
     Banknote,
     Briefcase,
@@ -22,7 +21,6 @@ import {
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import * as z from "zod";
-import { tutorService } from "@/service/tutor.service";
 import { createTutor } from "@/actions/tutor.actions";
 import { toast } from "sonner";
 import Link from "next/link";
@@ -33,7 +31,10 @@ interface TutorRegisterFormProps {
 }
 
 const formSchema = z.object({
-    bio: z.string().min(10, "Bio must be at least 10 characters"),
+    bio: z
+        .string()
+        .min(10, "Bio must be at least 10 characters")
+        .max(225, "Bio must be within 225 characters"),
     hourlyRate: z.number().min(1, "Minimum rate is ৳1"),
     experienceYears: z.number().min(0, "Cannot be negative"),
     subjectIds: z.array(z.string()).min(1, "Select at least one subject"),

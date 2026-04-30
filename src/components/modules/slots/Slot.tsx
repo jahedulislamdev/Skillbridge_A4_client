@@ -205,7 +205,7 @@ export default function SlotsPage({ data }: { data: Slot[] }) {
                                                         variant="outline"
                                                         className="text-[10px] uppercase font-bold tracking-wider py-0 px-2 bg-primary/5"
                                                     >
-                                                        {sub}
+                                                        {sub.subjects.name}
                                                     </Badge>
                                                 ),
                                             )

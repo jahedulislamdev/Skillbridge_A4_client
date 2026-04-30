@@ -22,6 +22,13 @@ export interface TutorData {
     experienceYears?: number;
     subjectIds: string[];
 }
+export interface UpdateTutorProps {
+    bio?: string;
+    hourlyRate?: number;
+    experienceYears?: number;
+    subjectIds?: string[];
+    status?: string;
+}
 
 export const tutorService = {
     getTutors: async (params?: GetTutorParams, options?: ServiceOptions) => {
@@ -75,6 +82,27 @@ export const tutorService = {
             const cookieStore = await cookies();
             const res = await fetch(`${app_url}/tutors`, {
                 method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString(),
+                },
+                body: JSON.stringify(data),
+            });
+            return await res.json();
+        } catch (err) {
+            errorHandler(err);
+        }
+    },
+    updateTutor: async (
+        tutorId: string,
+        { data }: { data: UpdateTutorProps },
+    ) => {
+        try {
+            // console.log("data from tutor service: ", data);
+
+            const cookieStore = await cookies();
+            const res = await fetch(`${app_url}/tutors/${tutorId}`, {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     Cookie: cookieStore.toString(),

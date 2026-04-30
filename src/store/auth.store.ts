@@ -6,7 +6,6 @@ type UserState = {
     image: string | null;
     email: string | null;
     role: string | null;
-    tutorId: string | null;
     isBanned?: boolean;
 
     setUser: (data: {
@@ -15,7 +14,6 @@ type UserState = {
         image: string;
         email: string;
         role: string;
-        tutorId?: string;
         isBanned?: boolean;
     }) => void;
 
@@ -28,7 +26,6 @@ export const userStore = create<UserState>((set) => ({
     name: null,
     image: null,
     role: null,
-    tutorId: null,
     isBanned: false,
 
     setUser: (data) => {
@@ -38,7 +35,6 @@ export const userStore = create<UserState>((set) => ({
             email: data.email,
             image: data.image,
             role: data.role,
-            tutorId: data.tutorId ?? null,
             isBanned: data.isBanned ?? false,
         });
     },
@@ -50,7 +46,6 @@ export const userStore = create<UserState>((set) => ({
             image: null,
             email: null,
             role: null,
-            tutorId: null,
             isBanned: false,
         });
     },

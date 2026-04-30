@@ -9,13 +9,14 @@ import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import * as z from "zod";
 import { updateUser } from "@/actions/user.actions";
+import { Card } from "@/components/ui/card";
 
 const formSchema = z.object({
     name: z.string().min(1, "Name is required"),
     image: z.string().url("Must be a valid image URL").or(z.literal("")),
 });
 
-export default function ProfileForm({ user }: { user: any }) {
+export default function UserProfileForm({ user }: { user: any }) {
     const { name, email, image, userId } = user;
     const form = useForm({
         defaultValues: {
@@ -42,12 +43,12 @@ export default function ProfileForm({ user }: { user: any }) {
     return (
         /* Removed w-lg to allow parent Card to control width. 
        Added w-full to ensure it fills the Card. */
-        <div className="space-y-8 w-full">
+        <Card className="space-y-8 max-w-2xl mx-auto p-10">
             {/* Avatar Section: Centered on mobile, start-aligned on desktop */}
             <form.Subscribe
                 selector={(state) => [state.values.name, state.values.image]}
                 children={([name, image]) => (
-                    <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-start">
+                    <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center">
                         <Avatar className="h-24 w-24 border-2 border-background shadow-sm">
                             <AvatarImage src={image} alt={name} />
                             <AvatarFallback className="text-xl font-bold bg-muted">
@@ -173,6 +174,6 @@ export default function ProfileForm({ user }: { user: any }) {
                     />
                 </div>
             </form>
-        </div>
+        </Card>
     );
 }

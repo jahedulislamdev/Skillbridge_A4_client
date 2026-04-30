@@ -1,5 +1,4 @@
 import SlotsPage from "@/components/modules/slots/Slot";
-import { bookingService } from "@/service/booking.service";
 import { slotService } from "@/service/slots.service";
 
 const Sessions = async () => {

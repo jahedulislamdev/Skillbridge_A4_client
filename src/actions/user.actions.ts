@@ -14,3 +14,7 @@ export const getUserSession = async () => {
 export const updateUser = async (id: string, data: UserProps) => {
     return await userService.updateUser(id, data);
 };
+
+export const getUserById = async (id: string) => {
+    return await userService.getUserById(id);
+};

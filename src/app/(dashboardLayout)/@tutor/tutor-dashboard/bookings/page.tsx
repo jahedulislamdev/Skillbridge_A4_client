@@ -1,13 +1,15 @@
 import UserBookings from "@/app/(dashboardLayout)/@user/user-dashboard/my-bookings/page";
 import { BookingCard } from "@/components/modules/booking/BookingCard";
 import { bookingService } from "@/service/booking.service";
-import { userStore } from "@/store/auth.store";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"; // Assuming shadcn/ui
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { userService } from "@/service/user.service";
 
 const TutorBookings = async () => {
-    const { tutorId } = userStore.getState();
+    const { data } = await userService.getSession();
+    const user = await userService.getUserById(data?.user.id);
+
     const studentBookings = await bookingService.getBookingByTutorId(
-        tutorId as string,
+        user?.data.tutorProfile.id,
     );
     const bookings = studentBookings?.data || [];
 

@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 const app_url = env.API_URL;
 
 export interface BookingProps {
-    status: string;
+    status?: string;
     meetingLink?: string;
 }
 

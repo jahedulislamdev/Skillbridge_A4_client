@@ -1,4 +1,4 @@
-import { SlotProps, slotService } from "@/service/slots.service";
+import { slotService } from "@/service/slots.service";
 import { userService } from "@/service/user.service";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

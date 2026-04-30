@@ -56,7 +56,7 @@ export default async function TutorHub({
 
     return (
         <div className="min-h-screen bg-background">
-            <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-12 space-y-8">
+            <div className="mx-auto max-w-7xl px-4 py-8 md:py-12 space-y-8">
                 {/* ── Header Section ── */}
                 <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div className="space-y-3">
