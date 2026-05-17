@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/provider/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import UserProvider from "./provider/UserProvider";
-import { userService } from "@/service/user.service";
 
 const geistSans = Geist({
     variable: "--font-sans",
@@ -26,7 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const { data } = await userService.getSession();
     return (
         <html
             lang="en"
@@ -41,9 +39,7 @@ export default async function RootLayout({
                     disableTransitionOnChange
                 >
                     <TooltipProvider>
-                        <UserProvider initialUser={data}>
-                            {children}
-                        </UserProvider>
+                        <UserProvider>{children}</UserProvider>
                     </TooltipProvider>
                 </ThemeProvider>
             </body>

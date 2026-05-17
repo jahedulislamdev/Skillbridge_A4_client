@@ -17,8 +17,6 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { ModeToggle } from "./Modetoggle";
-import { useEffect } from "react";
-import { getUserSession } from "@/actions/user.actions";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userStore } from "@/store/auth.store";
