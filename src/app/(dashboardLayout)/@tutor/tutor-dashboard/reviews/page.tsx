@@ -1,33 +1,17 @@
-// "use client";
-
 import { reviewService } from "@/service/review.service";
 import { userService } from "@/service/user.service";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { format } from "date-fns";
-import { userStore } from "@/store/auth.store";
-import { getReviewsByTutorId } from "@/actions/review.action";
-// import { useEffect, useState } from "react";
 
-const Review = async () => {
-    // const { data } = await userService.getSession();
-    // const userId = data?.user.id;
-    // const tutorResponse = await userService.getUserById(userId);
-    // const tutorProfileId = tutorResponse?.data?.tutorProfile?.id;
-    // const [reviews, setReviews] = useState([]);
+const Review = async () => { 
+    const { data } = await userService.getSession();
+    const userId = data?.user.id;
+    const tutorResponse = await userService.getUserById(userId);
+    const tutorProfileId = tutorResponse?.data?.tutorProfile?.id;
 
-    const { tutorId } = userStore.getState();
-    // console.log(tutorId);
-    const res = await reviewService.getReviewsByTutorId(tutorId as string);
+    const res = await reviewService.getReviewsByTutorId(tutorProfileId);
     const reviews = res?.data || [];
-
-    // useEffect(() => {
-    //     if (!tutorId) return;
-    //     (async () => {
-    //         const response = await getReviewsByTutorId(tutorId as string);
-    //         setReviews(response?.data);
-    //     })();
-    // }, [tutorId]);
 
     return (
         <div className="container max-w-4xl py-8 space-y-6">

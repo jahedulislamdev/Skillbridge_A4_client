@@ -4,7 +4,7 @@ import { AnalyticsCharts } from "@/components/modules/dashboard/AnalyticsChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 const Analytics = async () => {
-    const response = await statsService.getStates();
+    const response = await statsService.getStates({ cache: "no-store" });
     const stats = response?.data;
 
     if (!stats)

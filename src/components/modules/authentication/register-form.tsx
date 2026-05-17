@@ -74,6 +74,8 @@ export function RegisterForm({
                 form.reset();
                 router.push("/login");
             } catch (err) {
+                console.log(err);
+
                 toast.error("Something went wrong. Please try again later.", {
                     id: toastId,
                 });

@@ -2,8 +2,7 @@ import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
 import { ServiceOptions } from "./tutor.service";
-import { object } from "zod";
-const auth_url = env.AUTh_URL;
+const auth_url = env.AUTH_URL;
 const api_url = env.API_URL;
 
 export interface UserProps {

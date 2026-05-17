@@ -1,6 +1,8 @@
+import { statsService } from "@/service/stats.service";
 import { Users, Video, Box, Book } from "lucide-react";
 
-const StatsSection = ({ stats }: any) => {
+const StatsSection = async () => {
+    const stats = await statsService.getStates({ revalidate: 60 });
     const { slots, subjects, users } = stats?.data || {};
 
     const statItems = [

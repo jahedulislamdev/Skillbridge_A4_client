@@ -9,11 +9,11 @@ type UserState = {
     isBanned?: boolean;
 
     setUser: (data: {
-        userId: string;
-        name: string;
-        image: string;
-        email: string;
-        role: string;
+        userId?: string;
+        name?: string;
+        image?: string;
+        email?: string;
+        role?: string;
         isBanned?: boolean;
     }) => void;
 

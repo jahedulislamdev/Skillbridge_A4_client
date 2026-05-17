@@ -1,6 +1,4 @@
-import * as React from "react";
 import { Star, Quote } from "lucide-react";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import {
     Carousel,

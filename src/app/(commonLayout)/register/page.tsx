@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { GraduationCap, CheckCircle2 } from "lucide-react";
+import { GraduationCap } from "lucide-react";
 import { RegisterForm } from "@/components/modules/authentication/register-form";
 import registerImage from "../../../../public/Fatherhood.svg";
 

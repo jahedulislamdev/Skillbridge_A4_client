@@ -13,13 +13,13 @@ import { useForm } from "@tanstack/react-form";
 import { Input } from "@/components/ui/input";
 import { FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import * as z from "zod";
-import { authClient } from "@/lib/auth-client";
+import { authClient, signInWithGoogle } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
-import { useAuthStore, userStore } from "@/store/auth.store";
+import { userStore } from "@/store/auth.store";
 import { getUserSession } from "@/actions/user.actions";
 
 const formSchema = z.object({
@@ -32,14 +32,8 @@ export function LoginForm({
     ...props
 }: React.ComponentProps<typeof Card>) {
     const router = useRouter();
-
     const { setUser } = userStore();
-    const handleWithGoogle = async () => {
-        await authClient.signIn.social({
-            provider: "google",
-            callbackURL: "http://localhost:3000",
-        });
-    };
+
     const form = useForm({
         defaultValues: {
             email: "",
@@ -103,7 +97,7 @@ export function LoginForm({
                 </CardDescription>
                 <Separator />
                 <Button
-                    onClick={() => handleWithGoogle()}
+                    onClick={() => signInWithGoogle()}
                     className="bg-mist-700  text-gray-300 px-5 rounded-3xl"
                 >
                     Continue With Google
