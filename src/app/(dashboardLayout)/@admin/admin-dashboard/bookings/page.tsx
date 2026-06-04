@@ -133,7 +133,7 @@ const Bookings = async () => {
                         ) : (
                             <TableRow>
                                 <TableCell
-                                    colSpan={6}
+                                    colSpan={9}
                                     className="h-32 text-center"
                                 >
                                     No records found.
