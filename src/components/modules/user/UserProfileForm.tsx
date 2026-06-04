@@ -17,7 +17,8 @@ const formSchema = z.object({
 });
 
 export default function UserProfileForm({ user }: { user: any }) {
-    const { name, email, image, userId } = user;
+    // console.log(user);
+    const { name, email, image, id } = user;
     const form = useForm({
         defaultValues: {
             name: name || "",
@@ -28,11 +29,12 @@ export default function UserProfileForm({ user }: { user: any }) {
         },
         onSubmit: async ({ value }) => {
             try {
-                const res = await updateUser(userId, value);
-                if (!res?.data.success) {
+                const res = await updateUser(id, value);
+                // console.log(res);
+
+                if (!res?.success) {
                     return toast.error(res?.error.message);
                 }
-                // console.log("Submitted:", value);
                 toast.success("Profile updated successfully");
             } catch (error) {
                 toast.error("Failed to update profile");
@@ -43,6 +45,7 @@ export default function UserProfileForm({ user }: { user: any }) {
     return (
         /* Removed w-lg to allow parent Card to control width. 
        Added w-full to ensure it fills the Card. */
+
         <Card className="space-y-8 max-w-2xl mx-auto p-10">
             {/* Avatar Section: Centered on mobile, start-aligned on desktop */}
             <form.Subscribe

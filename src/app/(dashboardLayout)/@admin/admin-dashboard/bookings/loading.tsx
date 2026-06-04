@@ -1,4 +1,3 @@
-import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
     Table,
@@ -9,7 +8,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-export function BookingManagementSkeleton() {
+export default function BookingManagementSkeleton() {
     // Generates 5 dummy rows to represent loading booking items
     const skeletonRows = Array.from({ length: 5 }, (_, i) => i);
 

@@ -28,11 +28,15 @@ import { useRouter } from "next/navigation";
 
 export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
     const [open, setOpen] = useState(false);
-    const [isPending, setIsPending] = useState(false);
+    const [pendingAction, setPendingAction] = useState<
+        "PENDING" | "APPROVED" | null
+    >(null);
+
     const router = useRouter();
 
-    const handleTutorActions = async (status: string) => {
-        setIsPending(true);
+    const handleTutorActions = async (status: "PENDING" | "APPROVED") => {
+        setPendingAction(status);
+
         try {
             const res = await updateTutor(tutor.id, { status });
 
@@ -46,8 +50,9 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
             router.refresh();
         } catch (error) {
             toast.error("Something went wrong");
+            console.log(error);
         } finally {
-            setIsPending(false);
+            setPendingAction(null);
         }
     };
 
@@ -59,7 +64,7 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                 </Button>
             </DialogTrigger>
 
-            <DialogContent className="sm:max-w-[500px]">
+            <DialogContent className="sm:max-w-125">
                 <DialogHeader>
                     <DialogTitle>Tutor Application Review</DialogTitle>
                     <DialogDescription>
@@ -78,15 +83,19 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                                 {tutor.user?.name?.charAt(0)}
                             </AvatarFallback>
                         </Avatar>
+
                         <div className="space-y-1">
                             <h3 className="text-xl font-bold capitalize">
                                 {tutor.user?.name}
                             </h3>
+
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                 <Badge variant="secondary">
                                     {tutor.status}
                                 </Badge>
+
                                 <span>•</span>
+
                                 <div className="flex items-center">
                                     <Star className="w-3 h-3 fill-yellow-400 text-yellow-400 mr-1" />
                                     {tutor.averageRating} ({tutor.totalReviews}{" "}
@@ -99,16 +108,21 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                         <div className="space-y-1 p-3 border rounded-lg">
                             <p className="text-muted-foreground flex items-center gap-1 text-xs">
-                                <Clock className="w-3 h-3" /> Hourly Rate
+                                <Clock className="w-3 h-3" />
+                                Hourly Rate
                             </p>
+
                             <p className="font-semibold text-lg">
                                 ৳{tutor.hourlyRate}
                             </p>
                         </div>
+
                         <div className="space-y-1 p-3 border rounded-lg">
                             <p className="text-muted-foreground flex items-center gap-1 text-xs">
-                                <GraduationCap className="w-3 h-3" /> Experience
+                                <GraduationCap className="w-3 h-3" />
+                                Experience
                             </p>
+
                             <p className="font-semibold text-lg">
                                 {tutor.experienceYears} Years
                             </p>
@@ -119,6 +133,7 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                         <p className="text-sm font-semibold underline decoration-primary/30">
                             Subjects
                         </p>
+
                         <div className="flex flex-wrap gap-1">
                             {tutor.tutorSubjects?.map((sub: any) => (
                                 <Badge
@@ -136,6 +151,7 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                         <p className="text-sm font-semibold underline decoration-primary/30">
                             About / Bio
                         </p>
+
                         <p className="text-sm text-muted-foreground leading-relaxed italic border-l-2 pl-3">
                             "{tutor.bio}"
                         </p>
@@ -147,7 +163,7 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                         <Button
                             variant="ghost"
                             onClick={() => setOpen(false)}
-                            disabled={isPending}
+                            disabled={pendingAction !== null}
                         >
                             Cancel
                         </Button>
@@ -157,25 +173,28 @@ export default function AdminActionsInTutors({ tutor }: { tutor: any }) {
                                 variant="destructive"
                                 className="gap-2"
                                 disabled={
-                                    isPending || tutor.status === "PENDING"
+                                    pendingAction !== null ||
+                                    tutor.status === "PENDING"
                                 }
                                 onClick={() => handleTutorActions("PENDING")}
                             >
-                                {isPending ? (
+                                {pendingAction === "PENDING" ? (
                                     <Loader2 className="h-4 w-4 animate-spin" />
                                 ) : (
                                     <X className="h-4 w-4" />
                                 )}
                                 Reject
                             </Button>
+
                             <Button
                                 className="bg-emerald-700 hover:bg-emerald-800 gap-2 text-white"
                                 disabled={
-                                    isPending || tutor.status === "APPROVED"
+                                    pendingAction !== null ||
+                                    tutor.status === "APPROVED"
                                 }
                                 onClick={() => handleTutorActions("APPROVED")}
                             >
-                                {isPending ? (
+                                {pendingAction === "APPROVED" ? (
                                     <Loader2 className="h-4 w-4 animate-spin" />
                                 ) : (
                                     <Check className="h-4 w-4" />

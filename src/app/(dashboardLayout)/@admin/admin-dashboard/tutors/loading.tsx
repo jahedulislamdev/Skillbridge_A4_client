@@ -9,7 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-export function TutorManagementSkeleton() {
+export default function TutorManagementSkeleton() {
     // Generates 5 dummy rows to represent loading table data
     const skeletonRows = Array.from({ length: 5 }, (_, i) => i);
 

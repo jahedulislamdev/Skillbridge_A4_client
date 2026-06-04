@@ -43,8 +43,6 @@ export function LoginForm({
             onChange: formSchema,
         },
         onSubmit: async ({ value }) => {
-            const toastId = toast.loading("Logging in...");
-
             try {
                 const payload = {
                     ...value,
@@ -55,9 +53,7 @@ export function LoginForm({
                 // console.log(data);
 
                 if (error) {
-                    toast.error(error.message || "Invalid credentials.", {
-                        id: toastId,
-                    });
+                    toast.error(error.message || "Invalid credentials.");
                     return;
                 }
                 const { data } = await getUserSession();
@@ -68,13 +64,11 @@ export function LoginForm({
                     image: data?.user.image,
                     role: data?.user.role,
                 });
-                toast.success("Welcome back!", { id: toastId });
+                toast.success("Welcome back!");
                 form.reset();
                 router.push("/");
             } catch (err) {
-                toast.error("Something went wrong. Please try again later.", {
-                    id: toastId,
-                });
+                toast.error("Something went wrong. Please try again later.");
                 console.log(err);
             }
         },

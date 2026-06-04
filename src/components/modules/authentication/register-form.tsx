@@ -17,7 +17,7 @@ import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(1, "Please enter your name"),
@@ -42,8 +42,6 @@ export function RegisterForm({
             onChange: formSchema,
         },
         onSubmit: async ({ value }) => {
-            const toastId = toast.loading("Creating your account...");
-
             try {
                 const payload = {
                     ...value,
@@ -53,32 +51,25 @@ export function RegisterForm({
                 const { data, error } = await authClient.signUp.email(payload);
 
                 if (error) {
-                    toast.error(error.message || "Failed to create account.", {
-                        id: toastId,
-                    });
+                    toast.error(error.message || "Failed to create account.");
                     return;
                 }
 
                 if (!data?.user) {
-                    toast.error("Something went wrong. Please try again.", {
-                        id: toastId,
-                    });
+                    toast.error("Something went wrong. Please try again.");
                     return;
                 }
 
                 toast.success("Account created successfully!", {
                     description:
                         "We've sent a verification link to your email. Please verify your account before logging in.",
-                    id: toastId,
                 });
                 form.reset();
                 router.push("/login");
             } catch (err) {
                 console.log(err);
 
-                toast.error("Something went wrong. Please try again later.", {
-                    id: toastId,
-                });
+                toast.error("Something went wrong. Please try again later.");
             }
         },
     });

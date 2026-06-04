@@ -6,7 +6,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
-import ProfileForm from "@/components/modules/user/UserProfileForm";
 import UserProfileForm from "@/components/modules/user/UserProfileForm";
 
 export default async function UserProfilePage() {

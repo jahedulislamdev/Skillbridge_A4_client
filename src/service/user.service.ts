@@ -42,6 +42,7 @@ export const userService = {
     },
     updateUser: async (id: string, updatedData: UserProps) => {
         const cookieStore = await cookies();
+        console.log(updatedData);
         try {
             const res = await fetch(`${api_url}/users/${id}`, {
                 method: "PATCH",
