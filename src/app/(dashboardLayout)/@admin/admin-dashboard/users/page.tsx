@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { ShieldAlert, UserCheck, Mail } from "lucide-react";
+import { ShieldAlert, UserCheck, Mail, Users, Info } from "lucide-react";
 import { format } from "date-fns";
 import SearchBox from "@/components/modules/tutorHub/Search";
 import { PaginationController } from "@/components/layout/Pagination";
@@ -59,83 +59,99 @@ const UserManagement = async ({
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user: any) => (
-                            <TableRow key={user.id}>
-                                <TableCell className="flex items-center gap-3">
-                                    <Avatar className="h-9 w-9 border">
-                                        <AvatarImage
-                                            src={user.image}
-                                            alt={user.name}
-                                        />
-                                        <AvatarFallback>
-                                            {user.name.charAt(0)}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex flex-col">
-                                        <span className="font-medium text-sm line-clamp-1">
-                                            {user.name}
-                                        </span>
-                                        <span className="text-xs text-muted-foreground flex items-center gap-1">
-                                            <Mail className="h-3 w-3" />{" "}
-                                            {user.email}
+                        {users.length === 0 ? (
+                            <TableRow>
+                                <TableCell
+                                    colSpan={6}
+                                    className="h-40 text-center"
+                                >
+                                    <div className="flex flex-col items-center justify-center text-muted-foreground gap-2">
+                                        <Info className="h-8 w-8 opacity-20" />
+                                        <span className="text-sm font-medium">
+                                            No results found for your search.
                                         </span>
                                     </div>
                                 </TableCell>
-                                <TableCell>
-                                    <RoleBadge role={user.role} />
-                                </TableCell>
-                                <TableCell>
-                                    {user.emailVerified ? (
-                                        <Badge
-                                            variant="secondary"
-                                            className="bg-emerald-50 text-emerald-700 border-emerald-200"
-                                        >
-                                            Verified
-                                        </Badge>
-                                    ) : (
-                                        <Badge
-                                            variant="outline"
-                                            className="text-muted-foreground"
-                                        >
-                                            Pending
-                                        </Badge>
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {user.isBanned ? (
-                                        <Badge
-                                            variant="destructive"
-                                            className="flex w-fit items-center gap-1"
-                                        >
-                                            <ShieldAlert className="h-3 w-3" />{" "}
-                                            Banned
-                                        </Badge>
-                                    ) : (
-                                        <Badge
-                                            variant="outline"
-                                            className="flex w-fit items-center gap-1 text-emerald-600 border-emerald-200"
-                                        >
-                                            <UserCheck className="h-3 w-3" />{" "}
-                                            Active
-                                        </Badge>
-                                    )}
-                                </TableCell>
-                                <TableCell className="text-muted-foreground text-xs font-medium">
-                                    {format(
-                                        new Date(user.createdAt),
-                                        "MMM dd, yyyy",
-                                    )}
-                                </TableCell>
-                                <TableCell className="text-right">
-                                    <AdminActionsUser
-                                        initialIsBanned={user.isBanned}
-                                        initialRole={user.role}
-                                        initialVerified={user.emailVerified}
-                                        userId={user.id}
-                                    />
-                                </TableCell>
                             </TableRow>
-                        ))}
+                        ) : (
+                            users.map((user: any) => (
+                                <TableRow key={user.id}>
+                                    <TableCell className="flex items-center gap-3">
+                                        <Avatar className="h-9 w-9 border">
+                                            <AvatarImage
+                                                src={user.image}
+                                                alt={user.name}
+                                            />
+                                            <AvatarFallback>
+                                                {user.name.charAt(0)}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex flex-col">
+                                            <span className="font-medium text-sm line-clamp-1">
+                                                {user.name}
+                                            </span>
+                                            <span className="text-xs text-muted-foreground flex items-center gap-1">
+                                                <Mail className="h-3 w-3" />{" "}
+                                                {user.email}
+                                            </span>
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <RoleBadge role={user.role} />
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.emailVerified ? (
+                                            <Badge
+                                                variant="secondary"
+                                                className="bg-emerald-50 text-emerald-700 border-emerald-200"
+                                            >
+                                                Verified
+                                            </Badge>
+                                        ) : (
+                                            <Badge
+                                                variant="outline"
+                                                className="text-muted-foreground"
+                                            >
+                                                Pending
+                                            </Badge>
+                                        )}
+                                    </TableCell>
+                                    <TableCell>
+                                        {user.isBanned ? (
+                                            <Badge
+                                                variant="destructive"
+                                                className="flex w-fit items-center gap-1"
+                                            >
+                                                <ShieldAlert className="h-3 w-3" />{" "}
+                                                Banned
+                                            </Badge>
+                                        ) : (
+                                            <Badge
+                                                variant="outline"
+                                                className="flex w-fit items-center gap-1 text-emerald-600 border-emerald-200"
+                                            >
+                                                <UserCheck className="h-3 w-3" />{" "}
+                                                Active
+                                            </Badge>
+                                        )}
+                                    </TableCell>
+                                    <TableCell className="text-muted-foreground text-xs font-medium">
+                                        {format(
+                                            new Date(user.createdAt),
+                                            "MMM dd, yyyy",
+                                        )}
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <AdminActionsUser
+                                            initialIsBanned={user.isBanned}
+                                            initialRole={user.role}
+                                            initialVerified={user.emailVerified}
+                                            userId={user.id}
+                                        />
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                 </Table>
             </div>
