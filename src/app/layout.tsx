@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/app/provider/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import UserProvider from "./provider/UserProvider";
+import ScrollToTop from "@/helper/scrollToTop";
 
 const geistSans = Geist({
     variable: "--font-sans",
@@ -39,7 +40,10 @@ export default async function RootLayout({
                     disableTransitionOnChange
                 >
                     <TooltipProvider>
-                        <UserProvider>{children}</UserProvider>
+                        <UserProvider>
+                            <ScrollToTop />
+                            {children}
+                        </UserProvider>
                     </TooltipProvider>
                 </ThemeProvider>
             </body>

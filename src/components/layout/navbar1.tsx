@@ -20,6 +20,7 @@ import { ModeToggle } from "./Modetoggle";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userStore } from "@/store/auth.store";
+import { useState } from "react";
 
 interface MenuItem {
     title: string;
@@ -67,6 +68,7 @@ const Navbar = ({
 }: Navbar1Props) => {
     const router = useRouter();
     const { userId, role, clearUser } = userStore();
+    const [isPendingLogout, setIsPendingLogout] = useState(false);
     const menu = [
         {
             title: "Home",
@@ -95,11 +97,13 @@ const Navbar = ({
         beTutor: { title: "Be a Tutor", url: "/tutor-registration" },
     };
     const handleLogout = async () => {
+        setIsPendingLogout(true);
         await authClient.signOut({
             fetchOptions: {
                 onSuccess: () => {
                     clearUser();
                     router.replace("/login");
+                    setIsPendingLogout(false);
                 },
             },
         });
@@ -161,11 +165,15 @@ const Navbar = ({
                                     </Button>
                                 )}
                                 <Button
-                                    onClick={() => handleLogout()}
+                                    onClick={() => {
+                                        handleLogout();
+                                    }}
                                     variant="destructive"
                                 >
                                     <LogOut className="w-5 h-5" />
-                                    Logout
+                                    {isPendingLogout
+                                        ? "Logging out..."
+                                        : "Logout"}
                                 </Button>
                             </div>
                         ) : (
