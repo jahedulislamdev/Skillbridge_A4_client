@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/app/provider/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import UserProvider from "./provider/UserProvider";
 import ScrollToTop from "@/helper/scrollToTop";
+import { Suspense } from "react";
 
 const geistSans = Geist({
     variable: "--font-sans",
@@ -41,7 +42,9 @@ export default async function RootLayout({
                 >
                     <TooltipProvider>
                         <UserProvider>
-                            <ScrollToTop />
+                            <Suspense fallback={null}>
+                                <ScrollToTop />
+                            </Suspense>
                             {children}
                         </UserProvider>
                     </TooltipProvider>

@@ -128,7 +128,7 @@ export function RegisterForm({
                                             }
                                             placeholder="John Doe"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
@@ -172,7 +172,7 @@ export function RegisterForm({
                                             }
                                             placeholder="m@example.com"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
@@ -216,7 +216,7 @@ export function RegisterForm({
                                             }
                                             placeholder="https://example.com/avatar.jpg"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
@@ -260,7 +260,7 @@ export function RegisterForm({
                                             }
                                             placeholder="••••••••"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
@@ -286,7 +286,7 @@ export function RegisterForm({
                             <Button
                                 type="submit"
                                 form="registerForm"
-                                className="w-full py-5"
+                                className="w-full py-6"
                                 disabled={!canSubmit || isSubmitting}
                             >
                                 {isSubmitting ? (

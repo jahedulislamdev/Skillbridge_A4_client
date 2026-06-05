@@ -83,7 +83,7 @@ export function LoginForm({
             {...props}
         >
             <CardHeader className="space-y-1 text-center">
-                <CardTitle className="text-2xl mt-2 font-bold tracking-tight">
+                <CardTitle className="text-2xl my-2 font-bold tracking-tight">
                     Login
                 </CardTitle>
                 <CardDescription>
@@ -92,7 +92,7 @@ export function LoginForm({
                 <Separator />
                 <Button
                     onClick={() => signInWithGoogle()}
-                    className="bg-mist-700  text-gray-300 px-5 rounded-3xl"
+                    className="bg-mist-700  text-gray-300 p-5 my-4 rounded-3xl"
                 >
                     Continue With Google
                 </Button>
@@ -135,7 +135,7 @@ export function LoginForm({
                                             }
                                             placeholder="m@example.com"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
@@ -187,7 +187,7 @@ export function LoginForm({
                                             }
                                             placeholder="••••••••"
                                             className={cn(
-                                                "py-5",
+                                                "py-6",
                                                 isInvalid &&
                                                     "border-destructive focus-visible:ring-destructive",
                                             )}
