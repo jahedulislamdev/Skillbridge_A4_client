@@ -51,7 +51,7 @@ export function AnalyticsCharts({ stats }: { stats: any }) {
                         User Distribution
                     </CardTitle>
                 </CardHeader>
-                <CardContent className="h-[300px]">
+                <CardContent className="h-75">
                     <ResponsiveContainer width="100%" height="100%">
                         <PieChart>
                             <Pie

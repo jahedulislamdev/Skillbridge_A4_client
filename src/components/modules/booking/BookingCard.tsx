@@ -21,6 +21,7 @@ import {
     XCircle,
     Loader2,
     Link as LinkIcon,
+    Star,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -36,6 +37,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { BookingProps } from "@/service/booking.service";
+import { Textarea } from "@/components/ui/textarea";
 
 type BookingCardProps = {
     booking: any;
@@ -83,6 +85,21 @@ export function BookingCard({
         PENDING: "bg-yellow-500/10 text-yellow-600 border-yellow-200",
         CONFIRMED: "bg-emerald-500/10 text-emerald-600 border-emerald-200",
         CANCELLED: "bg-destructive/10 text-destructive border-destructive/20",
+    };
+
+    // review section
+    const [rating, setRating] = useState<number>(0);
+    const [hoveredRating, setHoveredRating] = useState<number>(0);
+    const [message, setMessage] = useState<string>("");
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // Handle your form submission here
+        console.log({ rating, message });
+
+        // Reset form after submission if needed
+        setRating(0);
+        setMessage("");
     };
 
     return (
@@ -145,7 +162,7 @@ export function BookingCard({
                             </div>
 
                             {/* ACTIONS */}
-                            <div className="flex flex-col gap-2 min-w-[140px]">
+                            <div className="flex flex-col gap-2 min-w-35">
                                 {/* Student/Tutor Cancel Dialog */}
                                 {showCancel && !isCancelled && (
                                     <AlertDialog>
@@ -280,6 +297,71 @@ export function BookingCard({
                             </div>
                         </div>
                     </div>
+                </div>
+                <div className="w-full max-w-xl mx-auto p-6 border rounded-xl bg-card text-card-foreground shadow-sm">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {/* Star Rating Section */}
+                        <div className="space-y-2">
+                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                Your Rating
+                            </label>
+                            <div className="flex items-center gap-1">
+                                {[1, 2, 3, 4, 5].map((star) => {
+                                    const isFilled =
+                                        star <= (hoveredRating || rating);
+                                    return (
+                                        <button
+                                            key={star}
+                                            type="button"
+                                            onClick={() => setRating(star)}
+                                            onMouseEnter={() =>
+                                                setHoveredRating(star)
+                                            }
+                                            onMouseLeave={() =>
+                                                setHoveredRating(0)
+                                            }
+                                            className="transition-transform hover:scale-110 focus:outline-none"
+                                        >
+                                            <Star
+                                                className={`h-7 w-7 transition-colors ${
+                                                    isFilled
+                                                        ? "fill-yellow-400 text-yellow-400"
+                                                        : "text-muted-foreground stroke-[1.5]"
+                                                }`}
+                                            />
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                        </div>
+
+                        {/* Message Field Section */}
+                        <div className="space-y-4">
+                            <label
+                                htmlFor="message"
+                                className="text-sm font-medium leading-none"
+                            >
+                                Your Review
+                            </label>
+                            <Textarea
+                                id="message"
+                                placeholder="Share your experience with this product..."
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                className="min-h-25 resize-none"
+                                required
+                            />
+                        </div>
+
+                        {/* Submit Button */}
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            disabled={rating === 0}
+                        >
+                            Submit Review
+                        </Button>
+                    </form>
                 </div>
             </CardContent>
         </Card>
