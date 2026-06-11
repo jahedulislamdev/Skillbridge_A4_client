@@ -12,7 +12,7 @@
 
 ## 🚀 Live Demo
 
-> 🔗 [https://skillbridge-client-nine.vercel.app/](#) &nbsp;|&nbsp;(#)
+> 🔗 [https://skillbridge-client-nine.vercel.app/]
 
 ### 🔐 Test Credentials
 
