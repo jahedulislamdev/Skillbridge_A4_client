@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SkillBridge 🎓
 
-## Getting Started
+> A smart tutor-student booking platform with verified tutors, flexible scheduling, and community-driven reviews.
 
-First, run the development server:
+---
+
+## 📌 Overview
+
+**SkillBridge** is a full-stack web application that bridges the gap between skilled tutors and eager learners. Unlike traditional tutoring platforms, SkillBridge puts quality first — every tutor goes through an admin verification process before they can accept bookings. Students get access to a curated pool of trusted educators, real-time slot availability, and a dedicated space to discover their favorite tutors.
+
+---
+
+## 🚀 Live Demo
+
+> 🔗 [https://skillbridge-client-nine.vercel.app/](#) &nbsp;|&nbsp;(#)
+
+### 🔐 Test Credentials
+
+| Role    | Email                   | Password |
+| ------- | ----------------------- | -------- |
+| Admin   | admin@gmail.com         | 12345678 |
+| Tutor   | harun@gmail.com         | 12345678 |
+| Student | mahimsatkania@gmail.com | 12345678 |
+
+---
+
+## ✨ Key Features
+
+### 👨‍🏫 For Tutors
+
+- Create a detailed profile with subjects, bio, and hourly rate
+- Submit profile for admin review and verification
+- Set custom availability by creating time slots (e.g., 10:00 AM – 11:00 AM)
+- Manage and track incoming sessions and student bookings
+
+### 🎓 For Students
+
+- Browse and search verified tutors by subject or name
+- View tutor profiles with ratings, reviews, and hourly rates
+- Book sessions based on real-time tutor availability
+- Leave reviews after completing a session
+- Save and revisit favorite tutors in **TutorHub**
+
+### 🛡️ For Admins
+
+- Review tutor registration requests from a dedicated dashboard
+- Approve or reject tutors after independent verification
+- Maintain platform quality and trust
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer      | Technology        |
+| ---------- | ----------------- |
+| Frontend   | Next.js           |
+| Backend    | Node.js / Express |
+| Database   | PostgreSQL        |
+| ORM        | Prisma            |
+| Auth       | Better Auth       |
+| Styling    | Shadcn ui         |
+| Deployment | vercel            |
+
+---
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+- Node.js `v18+`
+- npm
+- PostgreSQL
+
+### Installation
 
 ```bash
+# 1. Clone Client repository
+git clone https://github.com/jahedulislamdev/Skillbridge_A4_client.git
+
+# 1. Clone Server repository
+git clone https://github.com/jahedulislamdev/Skillbridge_A4_server.git
+
+# 2. Install dependencies
+npm install
+
+# 3. Set up environment variables
+cp .env.example .env
+
+# 4. Start the development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment Variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+# Backend
+BACKEND_API=your_backend_url
+API_URL=your_backend_api_url
+AUTH_URL=your_auth_url
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Frontend
+NEXT_PUBLIC_FRONTEND_API=your_frontend_url
+NEXT_PUBLIC_BACKEND_API=your_backend_url
+NEXT_PUBLIC_AUTH_URL=your_auth_url
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔄 User Flow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+User registar → Login → Tutor registers → Admin reviews & approves → Tutor sets availability -> Manage session & bookings
+                                                        ↓
+Student searches tutors with advanced fillters → Views profile → Books a slot → Session happens → Leaves a review
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please open an issue first to discuss what you'd like to change.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Fork the repo, then:
+git checkout -b feature/your-feature
+git commit -m "feat: add your feature"
+git push origin feature/your-feature
+# Open a Pull Request
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<p align="center">Built with ❤️ to make quality education more accessible.</p>

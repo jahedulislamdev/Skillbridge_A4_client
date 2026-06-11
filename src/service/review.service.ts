@@ -1,9 +1,34 @@
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
+import { cookies } from "next/headers";
 
 const api_url = env.API_URL;
 //* we define availabe slots to avalilabe sessions
 export const reviewService = {
+    createReview: async (
+        bookingId: string,
+        rating: number,
+        comment: string,
+    ) => {
+        const cookieStore = await cookies();
+        try {
+            const res = await fetch(`${api_url}/reviews/${bookingId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Cookie: cookieStore.toString(),
+                },
+                body: JSON.stringify({ bookingId, rating, comment }),
+            });
+            const data = await res.json();
+            if (!data.success) {
+                return { success: false, error: data.message };
+            }
+            return data;
+        } catch (err) {
+            return errorHandler(err);
+        }
+    },
     getReviews: async () => {
         try {
             const res = await fetch(`${api_url}/reviews`, {

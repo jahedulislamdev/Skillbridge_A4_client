@@ -21,6 +21,7 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userStore } from "@/store/auth.store";
 import { useState } from "react";
+import { Spinner } from "../ui/spinner";
 
 interface MenuItem {
     title: string;
@@ -171,9 +172,11 @@ const Navbar = ({
                                     variant="destructive"
                                 >
                                     <LogOut className="w-5 h-5" />
-                                    {isPendingLogout
-                                        ? "Logging out..."
-                                        : "Logout"}
+                                    {isPendingLogout ? (
+                                        <Spinner className="size-3" />
+                                    ) : (
+                                        "Logout"
+                                    )}
                                 </Button>
                             </div>
                         ) : (

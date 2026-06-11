@@ -38,6 +38,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { BookingProps } from "@/service/booking.service";
 import { Textarea } from "@/components/ui/textarea";
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { createReview } from "@/actions/review.action";
 
 type BookingCardProps = {
     booking: any;
@@ -54,6 +60,11 @@ export function BookingCard({
     const [status, setStatus] = useState(booking.status);
     const [meetingLink, setMeetingLink] = useState(booking.meetingLink || "");
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+    // Review state
+    const [rating, setRating] = useState<number>(0);
+    const [hoveredRating, setHoveredRating] = useState<number>(0);
+    const [message, setMessage] = useState<string>("");
 
     const router = useRouter();
 
@@ -78,6 +89,20 @@ export function BookingCard({
         }
     };
 
+    const handleReviewSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const res = await createReview(booking.id, rating, message);
+        console.log(res);
+        if (!res.success) {
+            toast.error(res.error);
+            return;
+        }
+        toast.success("Review submitted successfully!");
+
+        setRating(0);
+        setMessage("");
+    };
+
     const date = new Date(booking.scheduledAt);
     const isCancelled = status === "CANCELLED";
 
@@ -85,21 +110,6 @@ export function BookingCard({
         PENDING: "bg-yellow-500/10 text-yellow-600 border-yellow-200",
         CONFIRMED: "bg-emerald-500/10 text-emerald-600 border-emerald-200",
         CANCELLED: "bg-destructive/10 text-destructive border-destructive/20",
-    };
-
-    // review section
-    const [rating, setRating] = useState<number>(0);
-    const [hoveredRating, setHoveredRating] = useState<number>(0);
-    const [message, setMessage] = useState<string>("");
-
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Handle your form submission here
-        console.log({ rating, message });
-
-        // Reset form after submission if needed
-        setRating(0);
-        setMessage("");
     };
 
     return (
@@ -298,71 +308,112 @@ export function BookingCard({
                         </div>
                     </div>
                 </div>
-                <div className="w-full max-w-xl mx-auto p-6 border rounded-xl bg-card text-card-foreground shadow-sm">
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {/* Star Rating Section */}
-                        <div className="space-y-2">
-                            <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                Your Rating
-                            </label>
-                            <div className="flex items-center gap-1">
-                                {[1, 2, 3, 4, 5].map((star) => {
-                                    const isFilled =
-                                        star <= (hoveredRating || rating);
-                                    return (
-                                        <button
-                                            key={star}
-                                            type="button"
-                                            onClick={() => setRating(star)}
-                                            onMouseEnter={() =>
-                                                setHoveredRating(star)
-                                            }
-                                            onMouseLeave={() =>
-                                                setHoveredRating(0)
-                                            }
-                                            className="transition-transform hover:scale-110 focus:outline-none"
+
+                {/* Review Section — only for students on non-cancelled bookings */}
+                {status === "COMPLETED" && !isCancelled && (
+                    <Collapsible className="overflow-hidden rounded-lg border bg-card text-card-foreground shadow-sm">
+                        <CollapsibleTrigger className="flex w-full items-center justify-between px-6 py-4 text-sm font-semibold transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                            <span>Leave a Review</span>
+                            {/* Optional: Add a chevron icon that animates when open if your Collapsible supports state */}
+                            {/* <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform duration-200" /> */}
+                        </CollapsibleTrigger>
+
+                        <CollapsibleContent className="transition-all">
+                            <div className="border-t px-6 py-6">
+                                <form
+                                    onSubmit={handleReviewSubmit}
+                                    className="space-y-6"
+                                >
+                                    {/* Star Rating Section */}
+                                    <div className="space-y-3">
+                                        <label className="text-sm font-medium leading-none text-foreground">
+                                            Your Rating{" "}
+                                            <span className="text-destructive">
+                                                *
+                                            </span>
+                                        </label>
+                                        <div
+                                            className="flex items-center gap-1.5"
+                                            role="radiogroup"
+                                            aria-label="Star Rating"
                                         >
-                                            <Star
-                                                className={`h-7 w-7 transition-colors ${
-                                                    isFilled
-                                                        ? "fill-yellow-400 text-yellow-400"
-                                                        : "text-muted-foreground stroke-[1.5]"
-                                                }`}
-                                            />
-                                        </button>
-                                    );
-                                })}
+                                            {[1, 2, 3, 4, 5].map((star) => {
+                                                const isFilled =
+                                                    star <=
+                                                    (hoveredRating || rating);
+                                                return (
+                                                    <button
+                                                        key={star}
+                                                        type="button"
+                                                        role="radio"
+                                                        aria-checked={
+                                                            rating === star
+                                                        }
+                                                        onClick={() =>
+                                                            setRating(star)
+                                                        }
+                                                        onMouseEnter={() =>
+                                                            setHoveredRating(
+                                                                star,
+                                                            )
+                                                        }
+                                                        onMouseLeave={() =>
+                                                            setHoveredRating(0)
+                                                        }
+                                                        className="rounded-sm p-0.5 transition-all hover:scale-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                                    >
+                                                        <Star
+                                                            className={`h-7 w-7 transition-colors ${
+                                                                isFilled
+                                                                    ? "fill-amber-400 text-amber-400 drop-shadow-sm"
+                                                                    : "text-muted-foreground/60 stroke-[1.5]"
+                                                            }`}
+                                                        />
+                                                        <span className="sr-only">
+                                                            {star} Star
+                                                            {star > 1
+                                                                ? "s"
+                                                                : ""}
+                                                        </span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+
+                                    {/* Review Textarea Section */}
+                                    <div className="space-y-2">
+                                        <label
+                                            htmlFor="message"
+                                            className="text-sm font-medium leading-none text-foreground"
+                                        >
+                                            Your Review
+                                        </label>
+                                        <Textarea
+                                            id="message"
+                                            placeholder="Share your experience with this session..."
+                                            value={message}
+                                            onChange={(e) =>
+                                                setMessage(e.target.value)
+                                            }
+                                            className="min-h-30 resize-none focus-visible:ring-2"
+                                            required
+                                        />
+                                    </div>
+
+                                    {/* Actions Section */}
+                                    <Button
+                                        type="submit"
+                                        className="w-full font-medium shadow-sm transition-all active:scale-[0.98]"
+                                        disabled={rating === 0}
+                                    >
+                                        Submit Review
+                                    </Button>
+                                </form>
                             </div>
-                        </div>
-
-                        {/* Message Field Section */}
-                        <div className="space-y-4">
-                            <label
-                                htmlFor="message"
-                                className="text-sm font-medium leading-none"
-                            >
-                                Your Review
-                            </label>
-                            <Textarea
-                                id="message"
-                                placeholder="Share your experience with this product..."
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                                className="min-h-25 resize-none"
-                                required
-                            />
-                        </div>
-
-                        {/* Submit Button */}
-                        <Button
-                            type="submit"
-                            className="w-full"
-                            disabled={rating === 0}
-                        >
-                            Submit Review
-                        </Button>
-                    </form>
-                </div>
+                        </CollapsibleContent>
+                    </Collapsible>
+                )}
             </CardContent>
         </Card>
     );

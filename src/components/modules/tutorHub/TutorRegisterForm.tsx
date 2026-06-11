@@ -118,25 +118,18 @@ export default function TutorRegisterForm({
         },
         validators: { onChange: formSchema },
         onSubmit: async ({ value }) => {
-            const toastId = toast.loading("Creating tutor account...");
             try {
                 const res = await createTutor(value);
                 if (!res.success) {
-                    return toast.error(res.message, {
-                        id: toastId,
-                    });
+                    return toast.error(res.message);
                 }
                 if (res.success) {
-                    toast.success("Tutor Request Successfully Send!", {
-                        id: toastId,
-                    });
+                    toast.success("Tutor Request Successfully Send!");
                 }
                 form.reset();
                 setSubmitted(true);
             } catch (err) {
-                toast.error("Something went wrong. Please try again later.", {
-                    id: toastId,
-                });
+                toast.error("Something went wrong. Please try again later.");
             }
         },
     });
