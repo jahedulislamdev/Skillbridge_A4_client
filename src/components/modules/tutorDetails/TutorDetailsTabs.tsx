@@ -59,6 +59,10 @@ const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
         setOpen(false);
         router.push("/user-dashboard/my-bookings");
     };
+    console.log("Tutor Details:", tutor); // Debug log for tutor details
+    const availabilitySlots = tutor.availabilitySlots.filter(
+        (slot) => slot.isBooked === false,
+    );
     return (
         <Tabs defaultValue="about" className="w-full">
             <TabsList className="w-full justify-start h-12 bg-transparent border-b rounded-none p-0 gap-8">
@@ -118,7 +122,7 @@ const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
             {/* Availability Content */}
             <TabsContent value="slots" className="pt-8 animate-in fade-in">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {tutor.availabilitySlots?.map((slot: AvailabilitySlot) => (
+                    {availabilitySlots.map((slot: AvailabilitySlot) => (
                         <Card
                             key={slot.id}
                             className={`overflow-hidden transition-all ${slot.isBooked ? "opacity-70" : "hover:shadow-md"}`}
@@ -241,8 +245,7 @@ const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
                             </CardContent>
                         </Card>
                     ))}
-                    {(!tutor.availabilitySlots ||
-                        tutor.availabilitySlots.length === 0) && (
+                    {(!availabilitySlots || availabilitySlots.length === 0) && (
                         <div className="col-span-full py-20 text-center border-2 border-dashed rounded-xl">
                             <p className="text-muted-foreground">
                                 No slots currently available.
