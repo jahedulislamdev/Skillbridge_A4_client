@@ -1,14 +1,8 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-    Calendar,
-    Clock,
-    GraduationCap,
-    MessageSquare,
-    Star,
-    XCircle,
-    ShoppingBag,
-} from "lucide-react";
+import { Clock, GraduationCap, Star, XCircle, ShoppingBag } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +18,11 @@ import {
     DialogClose,
 } from "@/components/ui/dialog";
 import { AvailabilitySlot, Review, TutorDetail } from "@/types/tutorDetails";
+import { createBooking } from "@/actions/booking.actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { userStore } from "@/store/auth.store";
+import { useState } from "react";
 
 const DAY_MAP: Record<string, string> = {
     SUN: "Sunday",
@@ -44,6 +43,22 @@ const formatTime = (isoString: string) => {
 };
 
 const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
+    const [open, setOpen] = useState(false);
+    const { userId } = userStore();
+    const router = useRouter();
+
+    const handleBooking = async (slotId: string) => {
+        if (!userId) {
+            return router.push("/login");
+        }
+        const res = await createBooking(slotId);
+        if (!res.success) {
+            return toast.error(res.message);
+        }
+        toast.success("Session Booked successfully!");
+        setOpen(false);
+        router.push("/user-dashboard/my-bookings");
+    };
     return (
         <Tabs defaultValue="about" className="w-full">
             <TabsList className="w-full justify-start h-12 bg-transparent border-b rounded-none p-0 gap-8">
@@ -146,7 +161,10 @@ const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
                                             Already Booked
                                         </Button>
                                     ) : (
-                                        <Dialog>
+                                        <Dialog
+                                            open={open}
+                                            onOpenChange={setOpen}
+                                        >
                                             <DialogTrigger asChild>
                                                 <Button className="w-full group">
                                                     <ShoppingBag className="w-4 h-4 mr-2 group-hover:animate-bounce" />
@@ -208,8 +226,7 @@ const TutorDetailsTabs = ({ tutor }: { tutor: TutorDetail }) => {
                                                     </DialogClose>
                                                     <Button
                                                         onClick={() =>
-                                                            console.log(
-                                                                "Booking slot:",
+                                                            handleBooking(
                                                                 slot.id,
                                                             )
                                                         }

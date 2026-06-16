@@ -1,21 +1,13 @@
 import { tutorService } from "@/service/tutor.service";
-import { BookOpen, Users, Layers, TrendingUp, Filter } from "lucide-react";
+import { BookOpen, Users } from "lucide-react";
 
 import { Separator } from "@/components/ui/separator";
 import { PaginationController } from "@/components/layout/Pagination";
 import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
 import { StatPill } from "@/components/modules/tutorHub/StatPills";
-
-import {
-    Sheet,
-    SheetContent,
-    SheetTrigger,
-    SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import SearchBox from "@/components/modules/tutorHub/Search";
 import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
+import FilterSheet from "@/components/modules/tutorHub/FilterSheet";
 
 export default async function TutorHub({
     searchParams,
@@ -87,7 +79,7 @@ export default async function TutorHub({
                     </div>
 
                     <div className="md:hidden w-full sm:w-auto">
-                        <Sheet>
+                        {/* <Sheet>
                             <SheetTrigger asChild>
                                 <Button
                                     variant="outline"
@@ -104,10 +96,10 @@ export default async function TutorHub({
                                 <VisuallyHidden.Root>
                                     <SheetTitle>Tutor Filters</SheetTitle>
                                 </VisuallyHidden.Root>
-
                                 <TutorFilters className="border-0 shadow-none w-full" />
                             </SheetContent>
-                        </Sheet>
+                        </Sheet> */}
+                        <FilterSheet />
                     </div>
                 </div>
 

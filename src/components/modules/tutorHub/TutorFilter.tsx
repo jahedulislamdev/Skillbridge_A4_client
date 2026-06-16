@@ -1,19 +1,18 @@
 "use client";
 
-import * as React from "react";
 import { useState, useTransition } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
-// ✅ shadcn/ui components
+//shadcn/ui components
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
-// ✅ utils
+//utils
 import { cn } from "@/lib/utils";
 
-// ✅ icons
+// icons
 import { Star, Check, Loader2, SlidersHorizontal } from "lucide-react";
 
 // ─── Constants ─────────────────────────────────────────────

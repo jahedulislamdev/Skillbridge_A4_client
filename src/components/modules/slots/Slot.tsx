@@ -30,6 +30,7 @@ import Link from "next/link";
 import { createBooking } from "@/actions/booking.actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { userStore } from "@/store/auth.store";
 
 type Slot = any;
 
@@ -67,6 +68,7 @@ export default function SlotsPage({ data }: { data: Slot[] }) {
     const [status, setStatus] = useState<"all" | "available" | "booked">(
         "available",
     );
+    const [open, setOpen] = useState(false);
 
     const slots = useMemo(() => data ?? [], [data]);
 
@@ -87,13 +89,18 @@ export default function SlotsPage({ data }: { data: Slot[] }) {
         [slots, search, status],
     );
     const router = useRouter();
+    const { userId } = userStore();
     const handleBooking = async (slotId: string) => {
+        if (!userId) {
+            return router.push("/login");
+        }
         const res = await createBooking(slotId);
         if (!res.success) {
             return toast.error(res.message);
         }
         toast.success("Session Booked successfully!");
-        router.push("/sessions");
+        setOpen(false);
+        router.push("/user-dashboard/my-bookings");
     };
 
     return (
@@ -267,7 +274,10 @@ export default function SlotsPage({ data }: { data: Slot[] }) {
                                             Already Booked
                                         </Button>
                                     ) : (
-                                        <Dialog>
+                                        <Dialog
+                                            open={open}
+                                            onOpenChange={setOpen}
+                                        >
                                             <DialogTrigger asChild>
                                                 <Button className="w-full shadow-lg shadow-primary/20 group-hover:scale-[1.02] transition-transform">
                                                     <ShoppingBag className="w-4 h-4 mr-2" />

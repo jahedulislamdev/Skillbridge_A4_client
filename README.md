@@ -12,7 +12,11 @@
 
 ## 🚀 Live Demo
 
+<<<<<<< HEAD
 > 🔗 [https://skillbridge-client-nine.vercel.app/]
+=======
+🔗 [https://skillbridge-client-nine.vercel.app/](https://skillbridge-client-nine.vercel.app/)
+>>>>>>> 67e9d56 (update mobile tutorfilter sheet and mobile nav manu)
 
 ### 🔐 Test Credentials
 
@@ -49,6 +53,12 @@
 
 ---
 
+## 🖼️ Screenshots
+
+> _(Add screenshots here — admin dashboard, tutor profile page, booking flow, TutorHub)_
+
+---
+
 ## 🛠️ Tech Stack
 
 | Layer      | Technology        |
@@ -58,8 +68,8 @@
 | Database   | PostgreSQL        |
 | ORM        | Prisma            |
 | Auth       | Better Auth       |
-| Styling    | Shadcn ui         |
-| Deployment | vercel            |
+| Styling    | shadcn/ui         |
+| Deployment | Vercel            |
 
 ---
 
@@ -74,19 +84,22 @@
 ### Installation
 
 ```bash
-# 1. Clone Client repository
+# 1. Clone the client repository
 git clone https://github.com/jahedulislamdev/Skillbridge_A4_client.git
+cd Skillbridge_A4_client
 
-# 1. Clone Server repository
+# 2. Clone the server repository (separate terminal)
 git clone https://github.com/jahedulislamdev/Skillbridge_A4_server.git
+cd Skillbridge_A4_server
 
-# 2. Install dependencies
+# 3. Install dependencies (run in both directories)
 npm install
 
-# 3. Set up environment variables
+# 4. Set up environment variables
 cp .env.example .env
+# Fill in your values in .env
 
-# 4. Start the development server
+# 5. Start the development server
 npm run dev
 ```
 
@@ -109,9 +122,11 @@ NEXT_PUBLIC_AUTH_URL=your_auth_url
 ## 🔄 User Flow
 
 ```
-User registar → Login → Tutor registers → Admin reviews & approves → Tutor sets availability -> Manage session & bookings
-                                                        ↓
-Student searches tutors with advanced fillters → Views profile → Books a slot → Session happens → Leaves a review
+Register & Login
+      │
+      ├── As Tutor ──► Submit Profile ──► Admin Reviews ──► Approved ──► Set Availability ──► Manage Bookings
+      │
+      └── As Student ──► Search Tutors (with filters) ──► View Profile ──► Book a Slot ──► Session ──► Leave Review
 ```
 
 ---
@@ -133,6 +148,15 @@ git push origin feature/your-feature
 ## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Jahedul Islam**
+
+- GitHub: [@jahedulislamdev](https://github.com/jahedulislamdev)
+- LinkedIn: [@jahedulislamdev](https://www.linkedin.com/in/jahedulislamdev/)
 
 ---
 

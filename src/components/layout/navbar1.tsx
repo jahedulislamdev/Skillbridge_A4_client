@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -173,7 +174,10 @@ const Navbar = ({
                                 >
                                     <LogOut className="w-5 h-5" />
                                     {isPendingLogout ? (
-                                        <Spinner className="size-3" />
+                                        <span>
+                                            Logging Out{" "}
+                                            <Spinner className="size-3" />
+                                        </span>
                                     ) : (
                                         "Logout"
                                     )}
@@ -308,13 +312,15 @@ const renderMenuItem = (item: MenuItem) => {
 
 const renderMobileMenuItem = (item: MenuItem) => {
     return (
-        <Link
-            key={item.title}
-            href={item.url}
-            className="text-md font-semibold"
-        >
-            {item.title}
-        </Link>
+        <SheetClose asChild key={item.title}>
+            <Link
+                key={item.title}
+                href={item.url}
+                className="text-md font-semibold"
+            >
+                {item.title}
+            </Link>
+        </SheetClose>
     );
 };
 
