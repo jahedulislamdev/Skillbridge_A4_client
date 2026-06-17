@@ -174,9 +174,9 @@ const Navbar = ({
                                 >
                                     <LogOut className="w-5 h-5" />
                                     {isPendingLogout ? (
-                                        <span>
+                                        <span className="flex">
                                             Logging Out{" "}
-                                            <Spinner className="size-3" />
+                                            <Spinner className="size-3 ms-1" />
                                         </span>
                                     ) : (
                                         "Logout"
