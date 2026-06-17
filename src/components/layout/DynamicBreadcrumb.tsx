@@ -10,7 +10,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export function DynamicBreadcrumb() {
     const pathname = usePathname();
@@ -23,7 +23,9 @@ export function DynamicBreadcrumb() {
             <BreadcrumbList>
                 {/* Always show Home/Dashboard first if you want */}
                 <BreadcrumbItem className="hidden md:block">
-                    <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    <BreadcrumbLink asChild>
+                        <Link href="/">Home</Link>
+                    </BreadcrumbLink>
                 </BreadcrumbItem>
 
                 {pathSegments.map((segment, index) => {
@@ -43,10 +45,10 @@ export function DynamicBreadcrumb() {
                                     <BreadcrumbPage>{label}</BreadcrumbPage>
                                 ) : (
                                     <BreadcrumbLink
-                                        href={href}
+                                        asChild
                                         className="hidden md:block"
                                     >
-                                        {label}
+                                        <Link href={href}>{label}</Link>
                                     </BreadcrumbLink>
                                 )}
                             </BreadcrumbItem>
