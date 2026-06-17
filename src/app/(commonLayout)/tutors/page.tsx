@@ -51,22 +51,24 @@ export default async function TutorHub({
             <div className="mx-auto max-w-7xl px-4 py-8 md:py-12 space-y-8">
                 {/* ── Header Section ── */}
                 <header className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
-                    <div className="space-y-3">
-                        <h1 className="text-3xl md:text-5xl font-bold tracking-tight bg-linear-to-r from-indigo-700 to-indigo-100 bg-clip-text text-transparent">
+                    <div>
+                        <h1 className="text-3xl font-bold tracking-tight text-foreground">
                             Find your perfect tutor
                         </h1>
-                        <p className="text-muted-foreground text-sm md:text-base max-w-prose leading-relaxed">
-                            Expert educators ready to guide you — from
-                            foundational skills to advanced mastery.
+                        <p className="text-muted-foreground text-sm mt-1">
+                            Expert educators ready to guide you —{" "}
+                            {pagination.total} options available.
                         </p>
                     </div>
 
-                    <div className="flex gap-3 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
-                        <StatPill
-                            icon={Users}
-                            value={pagination.total}
-                            label="Tutors"
-                        />
+                    {/* Controls Bar */}
+                    <div className="flex gap-3 items-center">
+                        <div className="flex-1">
+                            <SearchBox placeholder="Search by name or subject…" />
+                        </div>
+                        <div className="md:hidden">
+                            <FilterSheet />
+                        </div>
                     </div>
                 </header>
 
@@ -74,31 +76,7 @@ export default async function TutorHub({
 
                 {/* ── Search & Mobile Filter Trigger ── */}
                 <div className="flex flex-col sm:flex-row gap-4 items-center">
-                    <div className="w-full sm:flex-1">
-                        <SearchBox placeholder="Search by name or subject…" />
-                    </div>
-
                     <div className="md:hidden w-full sm:w-auto">
-                        {/* <Sheet>
-                            <SheetTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    className="w-full gap-2 border-dashed"
-                                >
-                                    <Filter size={16} />
-                                    Filters
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent
-                                side="left"
-                                className="w-75 p-0 overflow-y-auto"
-                            >
-                                <VisuallyHidden.Root>
-                                    <SheetTitle>Tutor Filters</SheetTitle>
-                                </VisuallyHidden.Root>
-                                <TutorFilters className="border-0 shadow-none w-full" />
-                            </SheetContent>
-                        </Sheet> */}
                         <FilterSheet />
                     </div>
                 </div>
