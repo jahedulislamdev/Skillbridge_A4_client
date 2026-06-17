@@ -1,6 +1,7 @@
 import { env } from "@/env";
 import { errorHandler } from "@/helper/errHandler";
 import { cookies } from "next/headers";
+import { ServiceOptions } from "./tutor.service";
 
 export enum DayOfWeek {
     SUN = "SUN",
@@ -15,6 +16,12 @@ export interface SlotProps {
     dayOfWeek: DayOfWeek;
     startTime: string;
     endTime: string;
+}
+interface GetSlotParams {
+    page?: string;
+    limit?: string;
+    skip?: string;
+    search?: string;
 }
 const api_url = env.API_URL;
 
@@ -36,17 +43,28 @@ export const slotService = {
             errorHandler(err);
         }
     },
-    getSlots: async () => {
+    getSlots: async (params?: GetSlotParams, options?: ServiceOptions) => {
         try {
-            const res = await fetch(`${api_url}/slots`, {
-                next: { revalidate: 60 },
-            });
+            const url = new URL(`${api_url}/slots`);
+            if (params) {
+                Object.entries(params).forEach(([key, value]) => {
+                    if (value !== undefined && value !== null && value !== "") {
+                        url.searchParams.append(key, value);
+                    }
+                });
+            }
+            const config: RequestInit = {};
+            if (options?.cache) {
+                config.cache = options.cache;
+            }
+            if (options?.revalidate) {
+                config.next = { revalidate: options.revalidate };
+            }
+            const res = await fetch(url.toString(), config);
             const data = await res.json();
             if (!data.success) {
-                return { data: null, err: data.message };
+                return { data: null, error: "Failed to fetch" };
             }
-            // console.log(data);
-
             return { data, error: null };
         } catch (err) {
             return errorHandler(err);

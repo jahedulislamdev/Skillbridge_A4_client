@@ -10,7 +10,7 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination";
 import { getPageNumbers } from "@/helper/getPageNumbers";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationController {
     meta: {
@@ -27,16 +27,21 @@ export function PaginationController({ meta }: PaginationController) {
         total: totalTutors,
         totalPage,
     } = meta;
-
+    // console.log(meta);
     const searchParams = useSearchParams();
     const router = useRouter();
+    const pathName = usePathname();
+
     const navigateToPage = (pageNumber: number) => {
         const params = new URLSearchParams(searchParams.toString());
         params.set("page", pageNumber.toString());
-        router.push(`?${params.toString()}`);
+        router.push(`${pathName}?${params.toString()}`);
     };
-    const start = (currentPage - 1) * pageSize + 1;
-    const end = Math.min(currentPage * pageSize, totalTutors);
+
+    const start = totalTutors === 0 ? 0 : (currentPage - 1) * pageSize + 1;
+    const end =
+        totalTutors === 0 ? 0 : Math.min(currentPage * pageSize, totalTutors);
+
     return (
         <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 px-2">
             {/* Result Count Section */}
@@ -66,14 +71,12 @@ export function PaginationController({ meta }: PaginationController) {
 
                     {/* Page Numbers */}
                     {getPageNumbers(totalPage, currentPage).map((p, idx) => (
-                        <PaginationItem key={idx}>
+                        <PaginationItem key={`${p}-${idx}`}>
                             {p === "ellipsis" ? (
                                 <PaginationEllipsis className="text-muted-foreground" />
                             ) : (
                                 <PaginationLink
-                                    className={`h-9 w-9 cursor-pointer transition-all ${
-                                        currentPage === p
-                                    }`}
+                                    className={`h-9 w-9 cursor-pointer transition-all`}
                                     isActive={currentPage === p}
                                     onClick={() => navigateToPage(p as number)}
                                 >
