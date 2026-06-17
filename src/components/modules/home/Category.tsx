@@ -2,13 +2,10 @@ import {
     Sparkles,
     Languages,
     Code2,
-    ChevronRight,
-    ArrowRight,
     Book,
     Laptop,
     Clapperboard,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 const categories = [
     {

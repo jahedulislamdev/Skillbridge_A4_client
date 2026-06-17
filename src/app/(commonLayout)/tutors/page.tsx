@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { PaginationController } from "@/components/layout/Pagination";
 import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
 import { StatPill } from "@/components/modules/tutorHub/StatPills";
-import SearchBox from "@/components/modules/tutorHub/Search";
+import SearchBox from "@/components/layout/Search";
 import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
 import FilterSheet from "@/components/modules/tutorHub/FilterSheet";
 

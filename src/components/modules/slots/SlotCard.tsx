@@ -34,7 +34,6 @@ import {
     dayMap,
     formatTime,
 } from "@/helper/slots.helper";
-import { AvailabilitySlot } from "@/types/tutorDetails";
 
 type Slot = any;
 

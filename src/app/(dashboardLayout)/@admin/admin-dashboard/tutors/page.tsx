@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Star, Info, Users } from "lucide-react";
 import AdminActionsInTutors from "@/components/modules/tutorHub/AdminActions";
 import { PaginationController } from "@/components/layout/Pagination";
-import SearchBox from "@/components/modules/tutorHub/Search";
+import SearchBox from "@/components/layout/Search";
 
 type SearchParams = Promise<{ limit: string; page: string; search: string }>;
 

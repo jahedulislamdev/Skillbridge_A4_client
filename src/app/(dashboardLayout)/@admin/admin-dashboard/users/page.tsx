@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { ShieldAlert, UserCheck, Mail, Users, Info } from "lucide-react";
 import { format } from "date-fns";
-import SearchBox from "@/components/modules/tutorHub/Search";
+import SearchBox from "@/components/layout/Search";
 import { PaginationController } from "@/components/layout/Pagination";
 import { AdminActionsUser } from "@/components/modules/user/AdminActions";
 

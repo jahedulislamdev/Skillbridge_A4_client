@@ -1,7 +1,6 @@
 import { PaginationController } from "@/components/layout/Pagination";
-import SlotsPage from "@/components/modules/slots/Slot";
 import { slotService } from "@/service/slots.service";
-
+import SlotsPage from "@/components/modules/slots/Slot";
 const Sessions = async ({
     searchParams,
 }: {

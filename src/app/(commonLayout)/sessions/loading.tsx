@@ -1,83 +1,46 @@
-import { Skeleton } from "@/components/ui/skeleton";
+"use client";
 
-const SessionLoading = () => {
-    // 6ti card er jonno dummy array
-    const skeletonCards = Array.from({ length: 6 });
-
+export default function SlotsPageSkeleton() {
     return (
-        <div className="max-w-6xl mx-auto p-6 space-y-8">
+        <div className="w-full max-w-6xl mx-auto px-4 py-8 space-y-8 animate-pulse">
             {/* Header Section Skeleton */}
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-                <div className="space-y-2">
-                    <Skeleton className="h-9 w-64" /> {/* Title */}
-                    <Skeleton className="h-5 w-80" /> {/* Subtitle */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b">
+                <div className="space-y-2 w-full">
+                    {/* Title Skeleton */}
+                    <div className="h-8 w-48 bg-muted rounded-md" />
+                    {/* Subtitle Skeleton */}
+                    <div className="h-4 w-64 md:w-80 bg-muted/70 rounded-md" />
                 </div>
-                {/* Status Filter Tabs Skeleton */}
-                <div className="bg-muted/50 p-1 rounded-xl border w-fit flex gap-2">
-                    <Skeleton className="h-8 w-20 rounded-lg" />
-                    <Skeleton className="h-8 w-24 rounded-lg" />
-                    <Skeleton className="h-8 w-20 rounded-lg" />
-                </div>
+
+                {/* Search Input Skeleton */}
+                <div className="h-10 w-full md:max-w-xs bg-muted rounded-lg shrink-0" />
             </div>
 
-            {/* Search Bar Skeleton */}
-            <div className="relative max-w-md">
-                <Skeleton className="h-11 w-full rounded-md" />
-            </div>
-
-            {/* Grid Skeleton */}
+            {/* Main Content Area (Slot Cards Skeleton) */}
+            {/* Assuming a responsive 3-column grid for the cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {skeletonCards.map((_, i) => (
+                {Array.from({ length: 6 }).map((_, index) => (
                     <div
-                        key={i}
-                        className="border rounded-2xl bg-card overflow-hidden space-y-4"
+                        key={index}
+                        className="flex flex-col border rounded-xl p-5 space-y-4 bg-card"
                     >
-                        {/* Tutor Info Section */}
-                        <div className="p-5 space-y-4">
-                            <div className="flex items-start justify-between">
-                                <div className="flex items-center gap-3">
-                                    <Skeleton className="h-12 w-12 rounded-full" />{" "}
-                                    {/* Avatar */}
-                                    <div className="space-y-2">
-                                        <Skeleton className="h-4 w-24" />{" "}
-                                        {/* Name */}
-                                        <Skeleton className="h-3 w-16" />{" "}
-                                        {/* Experience */}
-                                    </div>
-                                </div>
-                                <Skeleton className="h-6 w-16 rounded-full" />{" "}
-                                {/* Rate Badge */}
-                            </div>
-
-                            {/* Subject Badges */}
-                            <div className="flex gap-1.5">
-                                <Skeleton className="h-4 w-12" />
-                                <Skeleton className="h-4 w-16" />
-                                <Skeleton className="h-4 w-10" />
-                            </div>
-
-                            {/* Slot Details (Day & Time) */}
-                            <div className="grid grid-cols-2 gap-3 pt-2">
-                                <Skeleton className="h-12 w-full rounded-lg" />
-                                <Skeleton className="h-12 w-full rounded-lg" />
-                            </div>
-
-                            {/* Price & Time Range */}
-                            <div className="flex justify-between items-center pt-2">
-                                <Skeleton className="h-4 w-28" />
-                                <Skeleton className="h-5 w-20" />
-                            </div>
+                        {/* Card Header (e.g., Tutor Name & Subject) */}
+                        <div className="space-y-2">
+                            <div className="h-5 w-3/4 bg-muted rounded-md" />
+                            <div className="h-4 w-1/2 bg-muted/70 rounded-md" />
                         </div>
 
-                        {/* Button Section */}
-                        <div className="px-5 pb-5">
-                            <Skeleton className="h-10 w-full rounded-md" />
+                        {/* Card Body (e.g., Time slots / Info tags) */}
+                        <div className="flex gap-2 pt-2">
+                            <div className="h-6 w-16 bg-muted/60 rounded-full" />
+                            <div className="h-6 w-16 bg-muted/60 rounded-full" />
                         </div>
+
+                        {/* Card Action (e.g., Book Button) */}
+                        <div className="h-9 w-full bg-muted rounded-md mt-auto pt-2" />
                     </div>
                 ))}
             </div>
         </div>
     );
-};
-
-export default SessionLoading;
+}
