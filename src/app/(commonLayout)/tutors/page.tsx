@@ -78,13 +78,6 @@ export default async function TutorHub({
 
                 <Separator className="bg-border/60" />
 
-                {/* ── Search & Mobile Filter Trigger ── */}
-                <div className="flex flex-col sm:flex-row gap-4 items-center">
-                    <div className="md:hidden w-full sm:w-auto">
-                        <FilterSheet />
-                    </div>
-                </div>
-
                 {/* ── Main Content Layout ── */}
                 <div className="flex flex-col md:flex-row gap-8 items-start">
                     <aside className="hidden md:block sticky top-24 shrink-0">
