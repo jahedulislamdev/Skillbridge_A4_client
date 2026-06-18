@@ -253,12 +253,16 @@ const Navbar = ({
                                                     className="bg-blue-500 hover:bg-blue-500"
                                                     size="lg"
                                                 >
-                                                    <Link
-                                                        href={auth.beTutor.url}
-                                                    >
-                                                        <GraduationCap className="w-5 h-5" />{" "}
-                                                        {auth.beTutor.title}
-                                                    </Link>
+                                                    <SheetClose asChild>
+                                                        <Link
+                                                            href={
+                                                                auth.beTutor.url
+                                                            }
+                                                        >
+                                                            <GraduationCap className="w-5 h-5" />{" "}
+                                                            {auth.beTutor.title}
+                                                        </Link>
+                                                    </SheetClose>
                                                 </Button>
                                             )}
                                             <Button
@@ -276,14 +280,20 @@ const Navbar = ({
                                                 variant="outline"
                                                 className="w-full"
                                             >
-                                                <Link href={auth.login.url}>
-                                                    {auth.login.title}
-                                                </Link>
+                                                <SheetClose asChild>
+                                                    <Link href={auth.login.url}>
+                                                        {auth.login.title}
+                                                    </Link>
+                                                </SheetClose>
                                             </Button>
                                             <Button asChild className="w-full">
-                                                <Link href={auth.signup.url}>
-                                                    {auth.signup.title}
-                                                </Link>
+                                                <SheetClose asChild>
+                                                    <Link
+                                                        href={auth.signup.url}
+                                                    >
+                                                        {auth.signup.title}
+                                                    </Link>
+                                                </SheetClose>
                                             </Button>
                                         </div>
                                     )}
