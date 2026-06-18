@@ -5,6 +5,7 @@ import { LoginForm } from "@/components/modules/authentication/login-form";
 import { GraduationCap, Sparkles } from "lucide-react";
 import loginImage from "../../../../public/kids_stading.svg";
 
+
 export default function LoginPage() {
     return (
         <div className="grid md:min-h-screen grid-cols-1 lg:grid-cols-2 bg-background">

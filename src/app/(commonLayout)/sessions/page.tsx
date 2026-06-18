@@ -1,7 +1,13 @@
 import { PaginationController } from "@/components/layout/Pagination";
 import { slotService } from "@/service/slots.service";
 import SlotsPage from "@/components/modules/slots/Slot";
-const Sessions = async ({
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Sessions",
+};
+
+export default async function Sessions({
     searchParams,
 }: {
     searchParams: Promise<{
@@ -9,7 +15,7 @@ const Sessions = async ({
         page: string;
         limit: string;
     }>;
-}) => {
+}) {
     const { page, limit, search } = await searchParams;
     const { data } = await slotService.getSlots(
         { page, limit, search },
@@ -33,6 +39,4 @@ const Sessions = async ({
             </div>
         </div>
     );
-};
-
-export default Sessions;
+}

@@ -4,10 +4,14 @@ import { BookOpen, Users } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { PaginationController } from "@/components/layout/Pagination";
 import { TutorCard } from "@/components/modules/tutorHub/TutorCard";
-import { StatPill } from "@/components/modules/tutorHub/StatPills";
 import SearchBox from "@/components/layout/Search";
 import { TutorFilters } from "@/components/modules/tutorHub/TutorFilter";
 import FilterSheet from "@/components/modules/tutorHub/FilterSheet";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Tutor Hub",
+};
 
 export default async function TutorHub({
     searchParams,

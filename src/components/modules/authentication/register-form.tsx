@@ -22,7 +22,15 @@ import { useRouter } from "next/navigation";
 const formSchema = z.object({
     name: z.string().min(1, "Please enter your name"),
     email: z.email("Please enter a valid email address"),
-    image: z.url("Please enter a valid image URL"),
+    image: z
+  .string()
+  .trim()
+  .refine(
+    (val) => val === "" || z.url().safeParse(val).success,
+    {
+      message: "Please enter a valid image URL",
+    }
+  ),
     password: z.string().min(8, "Password must be at least 8 characters"),
 });
 

@@ -14,6 +14,11 @@ import {
 import Link from "next/link";
 import StickySidebar from "@/components/modules/tutorDetails/StickySidebar";
 import TutorDetailsTabs from "@/components/modules/tutorDetails/TutorDetailsTabs";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Tutor Details",
+};
 
 const TutorDetails = async ({
     params,

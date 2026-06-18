@@ -1,7 +1,12 @@
 import TutorRegisterForm from "@/components/modules/tutorHub/TutorRegisterForm";
 import { subjectService } from "@/service/subject.service";
 import { userService } from "@/service/user.service";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const metadata: Metadata = {
+    title: "Tutor Registration",
+};
 
 const TutorRegistar = async () => {
     const session = await userService.getSession();
